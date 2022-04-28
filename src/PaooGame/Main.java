@@ -10,5 +10,7 @@ public class Main
         //new Game("tile game!",400,400);
         Game paooGame = new Game("IntoTheWoods", 850,650);
         paooGame.StartGame();
+
+
     }
 }
