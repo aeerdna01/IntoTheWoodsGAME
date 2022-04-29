@@ -66,23 +66,23 @@ public class Assets {
      */
     public static void Init() {
         /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
-        SpriteSheet hero = new SpriteSheet(ImageLoader.LoadImage("/textures/cavaler_walk.png"),64,64);
-        SpriteSheet hero_attack = new SpriteSheet(ImageLoader.LoadImage("/textures/cavaler_attack.png"),192,180);
-        SpriteSheet enemy_lvl1 = new SpriteSheet(ImageLoader.LoadImage("/textures/chimera_walk.png"),64,64);
-        SpriteSheet level1 = new SpriteSheet(ImageLoader.LoadImage("/textures/level1.png"), 32,32);
+        SpriteSheet hero = new SpriteSheet(ImageLoader.LoadImage("/textures/characters_sprite/cavaler_walk.png"),64,64);
+        SpriteSheet hero_attack = new SpriteSheet(ImageLoader.LoadImage("/textures/characters_sprite/cavaler_attack.png"),192,180);
+        SpriteSheet enemy_lvl1 = new SpriteSheet(ImageLoader.LoadImage("/textures/characters_sprite/chimera_walk.png"),64,64);
+        SpriteSheet level1 = new SpriteSheet(ImageLoader.LoadImage("/textures/objects/level1.png"), 32,32);
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 
         btn_start = new BufferedImage[2];
-        btn_start[0] = ImageLoader.LoadImage("/textures/buttonPlayN.png");
-        btn_start[1] = ImageLoader.LoadImage("/textures/buttonPlayP.png");
+        btn_start[0] = ImageLoader.LoadImage("/textures/buttons/buttonPlayN.png");
+        btn_start[1] = ImageLoader.LoadImage("/textures/buttons/buttonPlayP.png");
 
         btn_play = new BufferedImage[2];
-        btn_play[0] = ImageLoader.LoadImage("/textures/PlayN.png");
-        btn_play[1] = ImageLoader.LoadImage("/textures/PlayP.png");
+        btn_play[0] = ImageLoader.LoadImage("/textures/buttons/PlayN.png");
+        btn_play[1] = ImageLoader.LoadImage("/textures/buttons/PlayP.png");
 
         btn_back = new BufferedImage[2];
-        btn_back[0] = ImageLoader.LoadImage("/textures/backN.png");
-        btn_back[1] = ImageLoader.LoadImage("/textures/backP.png");
+        btn_back[0] = ImageLoader.LoadImage("/textures/buttons/backN.png");
+        btn_back[1] = ImageLoader.LoadImage("/textures/buttons/backP.png");
 
 
         monster1 = enemy_lvl1.crop(0,1);
@@ -130,15 +130,15 @@ public class Assets {
         soilT = level1.crop(2,0);
 
 
-        tree1 = ImageLoader.LoadImage("/textures/tree1.png");
-        tree2 = ImageLoader.LoadImage("/textures/tree2.png");
-        tree3 = ImageLoader.LoadImage("/textures/tree3.png");
-        tree4 = ImageLoader.LoadImage("/textures/tree4.png");
-        crystal = ImageLoader.LoadImage("/textures/crystal.png");
+        tree1 = ImageLoader.LoadImage("/textures/objects/tree1.png");
+        tree2 = ImageLoader.LoadImage("/textures/objects/tree2.png");
+        tree3 = ImageLoader.LoadImage("/textures/objects/tree3.png");
+        tree4 = ImageLoader.LoadImage("/textures/objects/tree4.png");
+        crystal = ImageLoader.LoadImage("/textures/objects/crystal.png");
 
-        menu1 = ImageLoader.LoadImage("/textures/menu1.png");
-        intro = ImageLoader.LoadImage("/textures/menu2.png");
-        help = ImageLoader.LoadImage("/textures/help.png");
+        menu1 = ImageLoader.LoadImage("/textures/menu/menu1.png");
+        intro = ImageLoader.LoadImage("/textures/menu/menu2.png");
+        help = ImageLoader.LoadImage("/textures/menu/help.png");
 
     }
 
