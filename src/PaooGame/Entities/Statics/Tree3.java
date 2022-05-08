@@ -35,4 +35,5 @@ public class Tree3 extends StaticEntity{
     public void die() {
 
     }
+
 }

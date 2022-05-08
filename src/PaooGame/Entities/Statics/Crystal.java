@@ -34,4 +34,5 @@ public class Crystal extends StaticEntity{
     public void die() {
 
     }
+
 }

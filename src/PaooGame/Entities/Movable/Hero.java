@@ -28,9 +28,22 @@ public class Hero extends Creature {
     private int direction = 0;
     private boolean attacking;
 
+    protected static int level;
+
+    protected int damage;
+    protected static int score;
+
+    private BufferedImage image;
+
+    private static Hero instance = null;
 
     public Hero(Handler handler, float x, float y) {
         super(handler, x, y,Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+
+        score = 0;
+
+        actual_life = 30;
+
         bounds.x=22;
         bounds.y=44; //44
         bounds.width=19; //19
@@ -52,6 +65,14 @@ public class Hero extends Creature {
         attackUp = new Animation(250,Assets.hero_attack_up);
         attackLeft = new Animation(250,Assets.hero_attack_left);
         attackRight = new Animation(250,Assets.hero_attack_right);
+    }
+    public static Hero getInstance(Handler handler, float x, float y)
+    {
+        if(instance==null)
+        {
+            instance = new Hero(handler,x,y);
+        }
+        return instance;
     }
 
     @Override
@@ -122,6 +143,7 @@ public class Hero extends Creature {
     @Override
     public void die(){
         System.out.println("YOU LOSE!");
+        Dead();
     }
 
     private void getInput()
@@ -152,31 +174,41 @@ public class Hero extends Creature {
     }
     @Override
     public void draw(Graphics g) {
-        if(attacking) {
-            //g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-            if(direction == 1){
-                g.drawImage(attackUp.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 38),180,192 ,null);
-            }
-            if(direction == 2){
-                g.drawImage(attackLeft.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 50),180,192 ,null);
-            }
-            if(direction == 3){
-                g.drawImage(attackRight.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 77),186,192 ,null);
-            }
-            if(direction == 0){
-                g.drawImage(attackDown.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 65),186,192 ,null);
-            }
-            if(Assets.attackTimeElapsed()){
-                attacking = false;
-            }
+        if(!this.Dead()){
+        g.setColor(Color.gray);
+        g.fillRect((int) x,(int)  y, 64, 10);
 
-        }else{
-            g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-        }
-        // g.setColor(Color.red);
-        //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
+        g.setColor(Color.green);
+        g.fillRect((int) x,(int)  y, (64*actual_life)/life, 10);
+
+        g.setColor(Color.white);
+        g.drawRect((int) x,(int)  y, 64, 10);
+            if (attacking) {
+                //g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+                if (direction == 1) {
+                    g.drawImage(attackUp.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 38), 180, 192, null);
+                }
+                if (direction == 2) {
+                    g.drawImage(attackLeft.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 50), 180, 192, null);
+                }
+                if (direction == 3) {
+                    g.drawImage(attackRight.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 77), 186, 192, null);
+                }
+                if (direction == 0) {
+                    g.drawImage(attackDown.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 65), 186, 192, null);
+                }
+                if (Assets.attackTimeElapsed()) {
+                    attacking = false;
+                }
+
+            } else {
+                g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+            }
+            // g.setColor(Color.red);
+            //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
+
     }
-
+}
     public long getAttackTimer() {
         return attackTimer;
     }
@@ -211,4 +243,31 @@ public class Hero extends Creature {
         }
     }
 
+    public boolean Dead()
+    {
+        if(actual_life <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static int getScore() {
+        return score;
+    }
+
+    public static void setScore(int score) {
+        Hero.score = score;
+    }
+
+    public static int getLevel() {
+        return level;
+    }
+
+    public static void setLevel(int level) {
+        Hero.level = level;
+    }
 }

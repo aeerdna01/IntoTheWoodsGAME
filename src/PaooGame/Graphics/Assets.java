@@ -10,9 +10,13 @@ import java.awt.image.BufferedImage;
 public class Assets {
     /// Referinte catre elementele grafice (dale) utilizate in joc.
 
-    static boolean passed=false;
-    static long now;
-    static long then;
+    static boolean hero_passed=false;
+    static long hero_now;
+    static long hero_then;
+
+    static boolean enemy_passed=false;
+    static long enemy_now;
+    static long enemy_then;
 
     public static BufferedImage[] hero_walk_down;
     public static BufferedImage[] hero_walk_up;
@@ -25,6 +29,16 @@ public class Assets {
     public static BufferedImage[] hero_attack_right;
 
     public static BufferedImage monster1;
+
+    public static BufferedImage[] chimera_walk_down;
+    public static BufferedImage[] chimera_walk_up;
+    public static BufferedImage[] chimera_walk_left;
+    public static BufferedImage[] chimera_walk_right;
+
+    public static BufferedImage[] chimera_attack_down;
+    public static BufferedImage[] chimera_attack_up;
+    public static BufferedImage[] chimera_attack_left;
+    public static BufferedImage[] chimera_attack_right;
 
 
     public static BufferedImage[] btn_start;
@@ -84,8 +98,35 @@ public class Assets {
         btn_back[0] = ImageLoader.LoadImage("/textures/buttons/backN.png");
         btn_back[1] = ImageLoader.LoadImage("/textures/buttons/backP.png");
 
+        chimera_walk_down =new BufferedImage[9];
+        chimera_walk_up =new BufferedImage[9];
+        chimera_walk_right =new BufferedImage[9];
+        chimera_walk_left =new BufferedImage[9];
+        for(int i=0;i<9;i++)
+            chimera_walk_left[i] = hero.crop(i, 1);
+        for(int i=0;i<9;i++)
+            chimera_walk_right[i] = hero.crop(i, 3);
+        for(int i=0;i<9;i++)
+            chimera_walk_up[i] = hero.crop(i,0);
+        for(int i=0;i<9;i++)
+            chimera_walk_down[i] = hero.crop(i,2);
 
-        monster1 = enemy_lvl1.crop(0,1);
+
+        chimera_attack_left  = new BufferedImage[6];
+        chimera_attack_right = new BufferedImage[6];
+        chimera_attack_up    = new BufferedImage[6];
+        chimera_attack_down  = new BufferedImage[6];
+        for(int i=0;i<6;i++)
+            chimera_attack_left[i] = hero_attack.crop(i , 1);
+        for(int i=0;i<6;i++)
+            chimera_attack_right[i] = hero_attack.crop(i, 3);
+        for(int i=0;i<6;i++)
+            chimera_attack_up[i] = hero_attack.crop(i,0);
+        for(int i=0;i<6;i++)
+            chimera_attack_down[i] = hero_attack.crop(i,2);
+
+
+        //monster1 = enemy_lvl1.crop(0,1);
 
         hero_walk_down =new BufferedImage[9];
         hero_walk_up =new BufferedImage[9];
@@ -113,6 +154,8 @@ public class Assets {
             hero_attack_up[i] = hero_attack.crop(i,0);
         for(int i=0;i<6;i++)
             hero_attack_down[i] = hero_attack.crop(i,2);
+
+
 
         edge = level1.crop(0,0);
         grass = level1.crop(2,3);
@@ -144,17 +187,33 @@ public class Assets {
 
     public static boolean attackTimeElapsed()
     {
-        if(!passed)
+        if(!hero_passed)
         {
-            then = System.nanoTime();
-            passed = true;
+            hero_then = System.nanoTime();
+            hero_passed = true;
         }
-        now = System.nanoTime();
-        if(now-then>1000000000/0.7)
+        hero_now = System.nanoTime();
+        if(hero_now-hero_then>1000000000/0.7)
         {
-            passed = false;
+            hero_passed = false;
             return true;
         }
         return false;
     }
+    public static boolean EnemyAttackTimeElapsed()
+    {
+        if(!enemy_passed)
+        {
+            enemy_then= System.nanoTime();
+            enemy_passed=true;
+        }
+        enemy_now=System.nanoTime();
+        if(enemy_now-enemy_then>=1000000000/2.7)
+        {
+            enemy_passed=false;
+            return true;
+        }
+        return false;
+    }
+
 }

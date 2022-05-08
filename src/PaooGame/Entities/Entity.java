@@ -31,16 +31,6 @@ public abstract class Entity {
 
     public abstract void draw(Graphics g);
 
-    public abstract void die();
-
-    public void hurt(int amt){
-        health -= amt;
-        if(health <= 0){
-            active = false;
-            die();
-        }
-    }
-
     public boolean checkEntityCollision(float xOffset, float yOffsett){
         for(Entity e: handler.getWorld().getEntityManager().getEntities()){
             if(e.equals(this))
@@ -54,7 +44,20 @@ public abstract class Entity {
     public Rectangle getCollisionBounds(float xOffset, float yOffset){
         return new Rectangle((int) (x + bounds.x + xOffset),(int) (y + bounds.y + yOffset), bounds.width,bounds.height);
     }
+    public Rectangle getAttackBounds(float xOffset, float yOffset){
+        return new Rectangle((int) (x + attackBounds.x + xOffset), (int) (y + attackBounds.y + yOffset), attackBounds.width,attackBounds.height);
+    }
 
+
+    public abstract void die();
+
+    public void hurt(int amt){
+        health -= amt;
+        if(health <= 0){
+            active = false;
+            die();
+        }
+    }
     public float getY() {
         return y;
     }
@@ -102,4 +105,5 @@ public abstract class Entity {
     public void setActive(boolean active) {
         this.active = active;
     }
+
 }
