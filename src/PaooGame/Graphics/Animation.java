@@ -34,5 +34,7 @@ public class Animation {
     }
 
     public void resetIndex(){ index = 0; }
-
+    public BufferedImage getFirstFrame(){
+        return frames[0];
+    }
 }

@@ -11,7 +11,7 @@ public abstract class Creature extends Entity {
 
     public static final float DEFAULT_SPEED=2.0f;
     public static  final int DEFAULT_CREATURE_WIDTH=64;
-    public static int DEFAULT_CREATURE_HEIGHT=64;
+    public static final int DEFAULT_CREATURE_HEIGHT=64;
 
 
 
@@ -20,8 +20,8 @@ public abstract class Creature extends Entity {
         speed=DEFAULT_SPEED;
         xMove=0;
         yMove=0;
-        current_life = life;
-}
+        current_health = health;
+    }
 
     public void move(){
         if(!checkEntityCollision(xMove,0f))
@@ -76,12 +76,12 @@ public abstract class Creature extends Entity {
         return handler.getWorld().getTile(x,y).IsSolid();
     }
 
-    public int getLife() {
-        return life;
+    public int getHealth() {
+        return health;
     }
 
-    public void setLife(int life) {
-        this.life = life;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public float getSpeed() {
@@ -107,5 +107,4 @@ public abstract class Creature extends Entity {
     public void setyMove(float yMove) {
         this.yMove = yMove;
     }
-
 }

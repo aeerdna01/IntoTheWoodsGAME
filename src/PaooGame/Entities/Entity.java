@@ -11,15 +11,19 @@ public abstract class Entity {
     protected float x, y;
     protected  int width, height;
 
-    protected  int life;
-    protected int current_life;
-    public static final int DEFAULT_life = 10;
+
+
+    protected  int health;
+    protected  int current_health;
+    public static final int DEFAULT_HEALTH=10;
+
     protected  boolean active = true;
+
 
     protected final Rectangle attackBounds;
     protected Rectangle normalBounds;
+    protected Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
     protected Rectangle attackbounds;
-    protected Rectangle bounds;
 
     public Entity(Handler handler, float x, float y, int width, int height){
         this.handler=handler;
@@ -27,12 +31,11 @@ public abstract class Entity {
         this.y=y;
         this.width=width;
         this.height=height;
-        life=DEFAULT_life;
-
+        health=DEFAULT_HEALTH;
+        current_health = health;
 
         normalBounds= new Rectangle(0,0,width, height);
         attackBounds = new Rectangle(0, 0, width, height);
-
         bounds = normalBounds;
         attackbounds = attackBounds;
     }
@@ -40,6 +43,16 @@ public abstract class Entity {
     public abstract void update();
 
     public abstract void draw(Graphics g);
+
+    public abstract void die();
+
+    public void hurt(int amt){
+        health -= amt;
+        if(health <= 0){
+            active = false;
+            die();
+        }
+    }
 
     public boolean checkEntityCollision(float xOffset, float yOffsett){
         for(Entity e: handler.getWorld().getEntityManager().getEntities()){
@@ -55,19 +68,10 @@ public abstract class Entity {
         return new Rectangle((int) (x + bounds.x + xOffset),(int) (y + bounds.y + yOffset), bounds.width,bounds.height);
     }
     public Rectangle getAttackBounds(float xOffset, float yOffset){
-        return new Rectangle((int) (x + attackbounds.x + xOffset), (int) (y + attackbounds.y + yOffset), attackbounds.width,attackbounds.height);
+        return new Rectangle((int)(x+ attackbounds.x+xOffset), (int) (y+attackbounds.y+yOffset), attackbounds.width, attackbounds.height);
     }
 
 
-    public abstract void die();
-
-    public void hurt(int amt){
-        current_life -= amt;
-        if(current_life <= 0){
-            active = false;
-            die();
-        }
-    }
     public float getY() {
         return y;
     }
@@ -100,20 +104,12 @@ public abstract class Entity {
         this.height = height;
     }
 
-    public int getLife() {
-        return life;
+    public int getHealth() {
+        return health;
     }
 
-    public void setLife(int life) {
-        this.life = life;
-    }
-
-    public int getCurrent_life() {
-        return current_life;
-    }
-
-    public void setCurrent_life(int current_life) {
-        this.current_life = current_life;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public boolean isActive() {
@@ -124,4 +120,26 @@ public abstract class Entity {
         this.active = active;
     }
 
+    public int getCurrent_health() {
+        return current_health;
+    }
+
+    public void setCurrent_health(int current_health) {
+        this.current_health = current_health;
+    }
+
+    public Rectangle getNormalBounds() {
+        return normalBounds;
+    }
+
+    public void setNormalBounds(Rectangle normalBounds) {
+        bounds = normalBounds;
+    }
+
+    public Rectangle getAttackBounds() {
+        return attackBounds;
+    }
+    public void setAttackBounds() {
+        bounds = attackBounds;
+    }
 }

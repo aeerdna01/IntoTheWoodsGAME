@@ -10,13 +10,11 @@ import java.awt.image.BufferedImage;
 public class Assets {
     /// Referinte catre elementele grafice (dale) utilizate in joc.
 
-    static boolean hero_passed=false;
-    static long hero_now;
-    static long hero_then;
-
-    static boolean enemy_passed=false;
-    static long enemy_now;
-    static long enemy_then;
+    static boolean passed=false;
+    static long now;
+    static long then;
+    static boolean monster_passed = false;
+    static long monster_then, monster_now;
 
     public static BufferedImage[] hero_walk_down;
     public static BufferedImage[] hero_walk_up;
@@ -28,17 +26,14 @@ public class Assets {
     public static BufferedImage[] hero_attack_left;
     public static BufferedImage[] hero_attack_right;
 
-    public static BufferedImage monster1;
-
     public static BufferedImage[] chimera_walk_down;
     public static BufferedImage[] chimera_walk_up;
     public static BufferedImage[] chimera_walk_left;
     public static BufferedImage[] chimera_walk_right;
 
-    public static BufferedImage[] chimera_attack_down;
-    public static BufferedImage[] chimera_attack_up;
-    public static BufferedImage[] chimera_attack_left;
-    public static BufferedImage[] chimera_attack_right;
+    public static BufferedImage[] hero_die;
+
+    public static BufferedImage monster1;
 
 
     public static BufferedImage[] btn_start;
@@ -82,7 +77,8 @@ public class Assets {
         /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
         SpriteSheet hero = new SpriteSheet(ImageLoader.LoadImage("/textures/characters_sprite/cavaler_walk.png"),64,64);
         SpriteSheet hero_attack = new SpriteSheet(ImageLoader.LoadImage("/textures/characters_sprite/cavaler_attack.png"),192,180);
-        SpriteSheet enemy_lvl1 = new SpriteSheet(ImageLoader.LoadImage("/textures/characters_sprite/chimera_walk.png"),64,64);
+        SpriteSheet hero_dead = new SpriteSheet( ImageLoader.LoadImage("/textures/characters_sprite/cavaler_dead.png"),64,64);
+        SpriteSheet enemy_lvl1_walk = new SpriteSheet(ImageLoader.LoadImage("/textures/characters_sprite/chimera_walk.png"),64,64);
         SpriteSheet level1 = new SpriteSheet(ImageLoader.LoadImage("/textures/objects/level1.png"), 32,32);
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 
@@ -98,35 +94,26 @@ public class Assets {
         btn_back[0] = ImageLoader.LoadImage("/textures/buttons/backN.png");
         btn_back[1] = ImageLoader.LoadImage("/textures/buttons/backP.png");
 
+
+        monster1 = enemy_lvl1_walk.crop(0,1);
+        hero_die = new BufferedImage[6];
+        for(int i=0;i<6;i++)
+            hero_die[i] = hero_dead.crop(i, 0);
+
+
         chimera_walk_down =new BufferedImage[7];
         chimera_walk_up =new BufferedImage[7];
         chimera_walk_right =new BufferedImage[7];
         chimera_walk_left =new BufferedImage[7];
         for(int i=0;i<7;i++)
-            chimera_walk_left[i] = enemy_lvl1.crop(i, 1);
+            chimera_walk_left[i] = hero.crop(i, 1);
         for(int i=0;i<7;i++)
-            chimera_walk_right[i] = enemy_lvl1.crop(i, 3);
+            chimera_walk_right[i] = hero.crop(i, 3);
         for(int i=0;i<7;i++)
-            chimera_walk_up[i] = enemy_lvl1.crop(i,0);
+            chimera_walk_up[i] = hero.crop(i,0);
         for(int i=0;i<7;i++)
-            chimera_walk_down[i] = enemy_lvl1.crop(i,2);
+            chimera_walk_down[i] = hero.crop(i,2);
 
-
-        chimera_attack_left  = new BufferedImage[6];
-        chimera_attack_right = new BufferedImage[6];
-        chimera_attack_up    = new BufferedImage[6];
-        chimera_attack_down  = new BufferedImage[6];
-        for(int i=0;i<6;i++)
-            chimera_attack_left[i] = hero_attack.crop(i , 1);
-        for(int i=0;i<6;i++)
-            chimera_attack_right[i] = hero_attack.crop(i, 3);
-        for(int i=0;i<6;i++)
-            chimera_attack_up[i] = hero_attack.crop(i,0);
-        for(int i=0;i<6;i++)
-            chimera_attack_down[i] = hero_attack.crop(i,2);
-
-
-        //monster1 = enemy_lvl1.crop(0,1);
 
         hero_walk_down =new BufferedImage[9];
         hero_walk_up =new BufferedImage[9];
@@ -154,8 +141,6 @@ public class Assets {
             hero_attack_up[i] = hero_attack.crop(i,0);
         for(int i=0;i<6;i++)
             hero_attack_down[i] = hero_attack.crop(i,2);
-
-
 
         edge = level1.crop(0,0);
         grass = level1.crop(2,3);
@@ -187,33 +172,51 @@ public class Assets {
 
     public static boolean attackTimeElapsed()
     {
-        if(!hero_passed)
+        if(!passed)
         {
-            hero_then = System.nanoTime();
-            hero_passed = true;
+            then = System.nanoTime();
+            passed = true;
         }
-        hero_now = System.nanoTime();
-        if(hero_now-hero_then>1000000000/0.7)
+        now = System.nanoTime();
+        if(now-then>1000000000/0.7)
         {
-            hero_passed = false;
-            return true;
-        }
-        return false;
-    }
-    public static boolean EnemyAttackTimeElapsed()
-    {
-        if(!enemy_passed)
-        {
-            enemy_then= System.nanoTime();
-            enemy_passed=true;
-        }
-        enemy_now=System.nanoTime();
-        if(enemy_now-enemy_then>=1000000000/0.7)
-        {
-            enemy_passed=false;
+            passed = false;
             return true;
         }
         return false;
     }
 
+    public static boolean monsterAttackTimeElapsed()
+    {
+        if(!monster_passed)
+        {
+            monster_then = System.nanoTime();
+            monster_passed = true;
+        }
+        monster_now = System.nanoTime();
+        if(monster_now-monster_then>1000000000/1.66)
+        {
+            monster_passed = false;
+            return true;
+        }
+        return false;
+    }
+
+
+    //Folosesc aceasta functie pentru a pune un delay la atacul player-ului pentru ca damage-ul sa fie dat dupa acest delay, nu inainte
+    public static boolean secondElapsed()
+    {
+        if(!passed)
+        {
+            then= System.nanoTime();
+            passed=true;
+        }
+        now=System.nanoTime();
+        if(now-then>=1000000000)
+        {
+            passed=false;
+            return true;
+        }
+        return false;
+    }
 }
