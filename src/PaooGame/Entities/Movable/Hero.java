@@ -42,12 +42,11 @@ public class Hero extends Creature {
 
         score = 0;
 
-        actual_life = 30;
 
-        bounds.x=22;
-        bounds.y=44; //44
-        bounds.width=19; //19
-        bounds.height=19; //19
+        normalBounds.x=22;
+        normalBounds.y=44; //44
+        normalBounds.width=19; //19
+        normalBounds.height=19; //19
 
 
         attackBounds.x = 26;
@@ -133,7 +132,7 @@ public class Hero extends Creature {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                e.hurt(1);
+                e.hurt(damage);
                 return;
             }
         }
@@ -175,14 +174,14 @@ public class Hero extends Creature {
     @Override
     public void draw(Graphics g) {
         if(!this.Dead()){
-        g.setColor(Color.gray);
-        g.fillRect((int) x,(int)  y, 64, 10);
+            g.setColor(Color.gray);
+            g.fillRect((int) x,(int)  y, 64, 10);
 
-        g.setColor(Color.green);
-        g.fillRect((int) x,(int)  y, (64*actual_life)/life, 10);
+            g.setColor(Color.green);
+            g.fillRect((int) x,(int)  y, (64*current_life)/life, 10);
 
-        g.setColor(Color.white);
-        g.drawRect((int) x,(int)  y, 64, 10);
+            g.setColor(Color.white);
+            g.drawRect((int) x,(int)  y, 64, 10);
             if (attacking) {
                 //g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
                 if (direction == 1) {
@@ -204,8 +203,8 @@ public class Hero extends Creature {
             } else {
                 g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
             }
-            // g.setColor(Color.red);
-            //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
+             g.setColor(Color.red);
+              g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
 
     }
 }
@@ -245,7 +244,7 @@ public class Hero extends Creature {
 
     public boolean Dead()
     {
-        if(actual_life <= 0)
+        if(current_life <= 0)
         {
             return true;
         }
@@ -270,4 +269,13 @@ public class Hero extends Creature {
     public static void setLevel(int level) {
         Hero.level = level;
     }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
 }

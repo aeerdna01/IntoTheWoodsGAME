@@ -98,18 +98,18 @@ public class Assets {
         btn_back[0] = ImageLoader.LoadImage("/textures/buttons/backN.png");
         btn_back[1] = ImageLoader.LoadImage("/textures/buttons/backP.png");
 
-        chimera_walk_down =new BufferedImage[9];
-        chimera_walk_up =new BufferedImage[9];
-        chimera_walk_right =new BufferedImage[9];
-        chimera_walk_left =new BufferedImage[9];
-        for(int i=0;i<9;i++)
-            chimera_walk_left[i] = hero.crop(i, 1);
-        for(int i=0;i<9;i++)
-            chimera_walk_right[i] = hero.crop(i, 3);
-        for(int i=0;i<9;i++)
-            chimera_walk_up[i] = hero.crop(i,0);
-        for(int i=0;i<9;i++)
-            chimera_walk_down[i] = hero.crop(i,2);
+        chimera_walk_down =new BufferedImage[7];
+        chimera_walk_up =new BufferedImage[7];
+        chimera_walk_right =new BufferedImage[7];
+        chimera_walk_left =new BufferedImage[7];
+        for(int i=0;i<7;i++)
+            chimera_walk_left[i] = enemy_lvl1.crop(i, 1);
+        for(int i=0;i<7;i++)
+            chimera_walk_right[i] = enemy_lvl1.crop(i, 3);
+        for(int i=0;i<7;i++)
+            chimera_walk_up[i] = enemy_lvl1.crop(i,0);
+        for(int i=0;i<7;i++)
+            chimera_walk_down[i] = enemy_lvl1.crop(i,2);
 
 
         chimera_attack_left  = new BufferedImage[6];
@@ -208,7 +208,7 @@ public class Assets {
             enemy_passed=true;
         }
         enemy_now=System.nanoTime();
-        if(enemy_now-enemy_then>=1000000000/2.7)
+        if(enemy_now-enemy_then>=1000000000/0.7)
         {
             enemy_passed=false;
             return true;

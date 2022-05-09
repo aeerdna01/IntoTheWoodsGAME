@@ -4,110 +4,147 @@ import PaooGame.Graphics.Animation;
 import PaooGame.Graphics.Assets;
 import PaooGame.Handler;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public class Chimera extends Enemy{
+    protected int width, height;
 
-    private boolean attacking =false;
-    private int direction = 0;
-    private int tick=0;
+    public Chimera(Handler handler, float x, float y) {
+        super(handler, x, y);
 
-    public Chimera(Handler handler, float x, float y, int width, int height, float speed, int life) {
-        super(handler, x, y, width, height, speed, life);
+        width = 64;
+        height = 64;
+        speed = 2.0f;
+        life = 10;
+        current_life = life;
+
+        animDown = new Animation(150, Assets.chimera_walk_down);
+        animUp = new Animation(150, Assets.chimera_walk_up);
+        animLeft = new Animation(150, Assets.chimera_walk_left);
+        animRight = new Animation(150, Assets.chimera_walk_right);
+
+        //Bounds
+        normalBounds.x = 15;
+        normalBounds.y = 18;
+        normalBounds.width = 35;
+        normalBounds.height = 40;
 
 
-        bounds.x = 24;
-        bounds.y = 28;
-        bounds.width = 16;
-        bounds.height = 30;
 
-        attackBounds.x = 0;
-        attackBounds.y = 0;
-        attackBounds.width = 54;
-        attackBounds.height = 58;
 
-        animDown = new Animation(15, Assets.chimera_walk_down);
-        animUp = new Animation(15, Assets.chimera_walk_up);
-        animLeft = new Animation(15, Assets.chimera_walk_left);
-        animRight = new Animation(15, Assets.chimera_attack_right);
-       // lastAnim = new Animation(15, Assets.caretakerRight);
-
-        attackDown = new Animation(15, Assets.chimera_attack_down);
-        attackUp = new Animation(15, Assets.chimera_attack_up);
-        attackLeft = new Animation(15, Assets.chimera_attack_left);
-        attackRight = new Animation(15, Assets.chimera_attack_right);
     }
 
     @Override
     public void update(Hero hero){
-
-        tick++;
-        attackDown.update();
-        attackUp.update();
-        attackRight.update();
-        attackLeft.update();
-
-        if(!attacking) {
-            gettingHit(hero);
-        }
-        if(tick>=180) {
-            if(!attacking) {
-                speed = 5 * speed;
-                attacking=true;
-            }
-            attackHero(hero);
-        }
-        if(tick>=300 && attacking) {
-            tick = 0;
-            speed= (float) (0.2*speed);
-            attacking=false;
-        }
         super.update(hero);
-
-        if(attacking) {
-            followPlayer(hero);
-        }
-        else {
-            xMove=0;
-            yMove=0;
-        }
-
-        if(direction == 3)
-        {
-            attackBounds.x = 32;
-            attackBounds.y = 10;
-            attackBounds.width = 48;
-            attackBounds.height = 42;
-        }
-        if(direction == 2)
-        {
-            attackBounds.x = -26;
-            attackBounds.y = 10;
-            attackBounds.width = 48;
-            attackBounds.height = 42;
-        }
-        if(direction == 1)
-        {
-            attackBounds.x = 5;
-            attackBounds.y = -12;
-            attackBounds.width = 60;
-            attackBounds.height = 24;
-        }
-        if(direction == 0)
-        {
-            attackBounds.x = 5;
-            attackBounds.y = 30;
-            attackBounds.width = 60;
-            attackBounds.height = 40;
-        }
+        monsterAttack(hero);
+        //if(hero.getX()>0 && hero.getX()<850 && hero.getY()>0 && hero.getY()<650)
+            tracking(hero);
     }
 
-    private void attackHero(Hero hero) {
-        if(attacking) {
-            if (hero.getCollisionBounds(0, 0).intersects(getAttackBounds(0, 0))) {
-                if (Assets.EnemyAttackTimeElapsed() && hero.getActual_life() > 0) {
-                    hero.setActual_life(hero.getActual_life() - damage);
-                    hero.setScore(hero.getScore()-5);
+    protected void tracking(Hero hero)
+    {
+        float diffX = Math.abs(hero.getX()-x);
+        float diffy = Math.abs(hero.getY()-y);
+
+        if(!hero.Dead())
+        {
+            xMove = 0;
+            yMove = 0;
+            if(y>hero.getY())
+            {
+                if(diffy>=64)
+                {
+                    yMove = -speed;
+                    attacking = false;
                 }
             }
+
+            if(y<hero.getY())
+            {
+                if(diffy>=34)
+                {
+                    yMove = speed;
+                    attacking = false;
+                }
+            }
+
+            if(diffX>=34)
+            {
+                if(x>hero.getX())
+                {
+                    xMove = -speed;
+                    attacking = false;
+                }
+                if(x<hero.getX())
+                {
+                    xMove = speed;
+                    attacking = false;
+                }
+            }
+            move();
+        }
+    }
+    @Override
+    public void die() {
+
+    }
+
+    @Override
+    public void draw(Graphics g)
+    {
+        g.setColor(Color.gray);
+        g.fillRect((int) x,(int)  y, 64, 10);
+
+        g.setColor(Color.red);
+        g.fillRect((int) x,(int)  y, (64*current_life)/life, 10);
+
+        g.setColor(Color.white);
+        g.drawRect((int) x,(int)  y, 64, 10);
+        g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
+
+        ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
+        g.setColor(Color.blue);
+        g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);
+        g.setColor(Color.red);
+        g.drawRect((int)(x+attackbounds.x), (int)(y+attackbounds.y), attackbounds.width, attackbounds.height);
+    }
+
+
+    private BufferedImage getCurrentAnimationFrame(){
+        if (xMove < 0) {
+            lastAnim = new Animation(100, Assets.chimera_walk_left);
+            direction = 2;          //Left
+            attackbounds.x = -5;
+            attackbounds.y = 0;
+            attackbounds.width = 38;
+            attackbounds.height = 80;
+            return animLeft.getCurrentFrame();
+        } else if (xMove > 0) {
+            lastAnim = new Animation(100,Assets.chimera_walk_right);
+            direction = 3;          //Right
+            attackbounds.x = 40;
+            attackbounds.y = 0;
+            attackbounds.width = 35;
+            attackbounds.height = 80;
+            return animRight.getCurrentFrame();
+        } else if (yMove < 0) {
+            lastAnim = new Animation(100,Assets.chimera_walk_up);
+            direction = 1;          //Up
+            attackbounds.x = 0;
+            attackbounds.y = 0;
+            attackbounds.width = 64;
+            attackbounds.height = 38;
+            return animUp.getCurrentFrame();
+        } else  {
+            lastAnim = new Animation(100, Assets.chimera_walk_down);
+            direction = 0;          //Down
+            attackbounds.x = 0;
+            attackbounds.y = 26;
+            attackbounds.width = 60;
+            attackbounds.height = 60;
+            return animDown.getCurrentFrame();
         }
     }
 }

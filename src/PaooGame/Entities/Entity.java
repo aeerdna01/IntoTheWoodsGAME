@@ -7,13 +7,19 @@ import java.awt.*;
 public abstract class Entity {
 
     protected Handler handler;
+
     protected float x, y;
     protected  int width, height;
-    protected Rectangle bounds;
-    protected  int health;
-    public static final int DEFAULT_HEALTH=5;
+
+    protected  int life;
+    protected int current_life;
+    public static final int DEFAULT_life = 10;
     protected  boolean active = true;
+
     protected final Rectangle attackBounds;
+    protected Rectangle normalBounds;
+    protected Rectangle attackbounds;
+    protected Rectangle bounds;
 
     public Entity(Handler handler, float x, float y, int width, int height){
         this.handler=handler;
@@ -21,10 +27,14 @@ public abstract class Entity {
         this.y=y;
         this.width=width;
         this.height=height;
-        health=DEFAULT_HEALTH;
+        life=DEFAULT_life;
 
-        bounds= new Rectangle(0,0,width, height);
+
+        normalBounds= new Rectangle(0,0,width, height);
         attackBounds = new Rectangle(0, 0, width, height);
+
+        bounds = normalBounds;
+        attackbounds = attackBounds;
     }
 
     public abstract void update();
@@ -45,15 +55,15 @@ public abstract class Entity {
         return new Rectangle((int) (x + bounds.x + xOffset),(int) (y + bounds.y + yOffset), bounds.width,bounds.height);
     }
     public Rectangle getAttackBounds(float xOffset, float yOffset){
-        return new Rectangle((int) (x + attackBounds.x + xOffset), (int) (y + attackBounds.y + yOffset), attackBounds.width,attackBounds.height);
+        return new Rectangle((int) (x + attackbounds.x + xOffset), (int) (y + attackbounds.y + yOffset), attackbounds.width,attackbounds.height);
     }
 
 
     public abstract void die();
 
     public void hurt(int amt){
-        health -= amt;
-        if(health <= 0){
+        current_life -= amt;
+        if(current_life <= 0){
             active = false;
             die();
         }
@@ -90,12 +100,20 @@ public abstract class Entity {
         this.height = height;
     }
 
-    public int getHealth() {
-        return health;
+    public int getLife() {
+        return life;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getCurrent_life() {
+        return current_life;
+    }
+
+    public void setCurrent_life(int current_life) {
+        this.current_life = current_life;
     }
 
     public boolean isActive() {
