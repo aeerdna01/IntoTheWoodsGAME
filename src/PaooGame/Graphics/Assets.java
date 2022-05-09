@@ -105,14 +105,15 @@ public class Assets {
         chimera_walk_up =new BufferedImage[7];
         chimera_walk_right =new BufferedImage[7];
         chimera_walk_left =new BufferedImage[7];
+
         for(int i=0;i<7;i++)
-            chimera_walk_left[i] = hero.crop(i, 1);
+            chimera_walk_left[i] = enemy_lvl1_walk.crop(i, 1);
         for(int i=0;i<7;i++)
-            chimera_walk_right[i] = hero.crop(i, 3);
+            chimera_walk_right[i] = enemy_lvl1_walk.crop(i, 3);
         for(int i=0;i<7;i++)
-            chimera_walk_up[i] = hero.crop(i,0);
+            chimera_walk_up[i] = enemy_lvl1_walk.crop(i,0);
         for(int i=0;i<7;i++)
-            chimera_walk_down[i] = hero.crop(i,2);
+            chimera_walk_down[i] = enemy_lvl1_walk.crop(i,2);
 
 
         hero_walk_down =new BufferedImage[9];

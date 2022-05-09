@@ -1,6 +1,7 @@
 package PaooGame.Worlds;
 
 import PaooGame.Entities.EntityManager;
+import PaooGame.Entities.Movable.Chimera;
 import PaooGame.Entities.Movable.Hero;
 import PaooGame.Entities.Statics.*;
 import PaooGame.Handler;
@@ -28,7 +29,7 @@ public class World {
         itemManager = new ItemManager(handler);
 
        // entityManager.AddEntity(new Monster(handler,Tile.TILE_WIDTH * 20, Tile.TILE_HEIGHT * 13));
-       // entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 3));
+        entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 20 , Tile.TILE_HEIGHT * 14));
 
         entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 15));
         entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 20));
