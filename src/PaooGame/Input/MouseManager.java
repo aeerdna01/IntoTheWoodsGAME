@@ -10,6 +10,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     private boolean leftPressed, rightPressed;
     private int mouseX, mouseY;
+
     private UIManager uiManager;
 
     public MouseManager(){

@@ -14,7 +14,7 @@ public class GameState extends State {
 
     private Hero hero;
     private World world;
-    private Tree1 tree;
+
 
     public GameState(Handler handler){
 

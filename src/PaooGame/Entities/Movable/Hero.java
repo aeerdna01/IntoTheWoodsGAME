@@ -22,7 +22,6 @@ public class Hero extends Creature {
     private Animation attackUp;
     private Animation attackRight;
     private Animation attackLeft;
-    private Animation animDie;
 
     //Attack timer
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
@@ -31,7 +30,7 @@ public class Hero extends Creature {
     protected static int level;
     private boolean attacking;
 
-    protected int damage = 1;
+    protected int damage;
     protected static int score;
 
     private static Hero instance;
@@ -63,8 +62,6 @@ public class Hero extends Creature {
         attackUp = new Animation(250,Assets.hero_attack_up);
         attackLeft = new Animation(250,Assets.hero_attack_left);
         attackRight = new Animation(250,Assets.hero_attack_right);
-
-        animDie = new Animation(100, Assets.hero_die);
     }
 
     //Singleton
@@ -88,12 +85,7 @@ public class Hero extends Creature {
             animRight.update();
             lastAnim.update();
         }
-        if(Dead())
-            animDie.update();
 
-
-        if(Assets.secondElapsed())
-            attacking = false;
 
         attackDown.update();
         attackUp.update();
@@ -110,12 +102,13 @@ public class Hero extends Creature {
     }
 
     private void checkAttacks() {
-/*
+
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
+
         if(attackTimer < attackCooldown)
             return;
- */
+
         Rectangle cb = getCollisionBounds(0, 0);
         Rectangle ar = new Rectangle();
         int arSize = 20;
@@ -138,12 +131,12 @@ public class Hero extends Creature {
             return;
         }
 
-        // attackTimer = 0;
+        attackTimer = 0;
 
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (e.getCollisionBounds(0, 0).intersects(ar) && Assets.attackTimeElapsed()) {
+            if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.hurt(1);
                 return;
             }
@@ -194,40 +187,29 @@ public class Hero extends Creature {
     }
     @Override
     public void draw(Graphics g) {
-        if (!this.Dead()) {
-            g.setColor(Color.gray);
-            g.fillRect((int) (x - handler.getGameCamera().getxOffset()),(int) (y - handler.getGameCamera().getyOffset()), 64, 10);
-
-            g.setColor(Color.green);
-            g.fillRect((int) (x - handler.getGameCamera().getxOffset()),(int)  (y - handler.getGameCamera().getyOffset()), (64*current_health)/health, 10);
-
-            g.setColor(Color.white);
-            g.drawRect((int) (x - handler.getGameCamera().getxOffset()),(int)  (y - handler.getGameCamera().getyOffset()), 64, 10);
-
-            if (attacking) {
-                //g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-                if (direction == 1) {
-                    g.drawImage(attackUp.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 38), 180, 192, null);
-                }
-                if (direction == 2) {
-                    g.drawImage(attackLeft.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 50), 180, 192, null);
-                }
-                if (direction == 3) {
-                    g.drawImage(attackRight.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 77), 186, 192, null);
-                }
-                if (direction == 0) {
-                    g.drawImage(attackDown.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 65), 186, 192, null);
-                }
-                if (Assets.attackTimeElapsed()) {
-                    attacking = false;
-                }
-
-            } else {
-                g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+        if(attacking) {
+            //g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+            if(direction == 1){
+                g.drawImage(attackUp.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 38),180,192 ,null);
             }
-            // g.setColor(Color.red);
-            //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
+            if(direction == 2){
+                g.drawImage(attackLeft.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 50),180,192 ,null);
+            }
+            if(direction == 3){
+                g.drawImage(attackRight.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 77),186,192 ,null);
+            }
+            if(direction == 0){
+                g.drawImage(attackDown.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 65),186,192 ,null);
+            }
+            if(Assets.attackTimeElapsed()){
+                attacking = false;
+            }
+
+        }else{
+            g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
         }
+        // g.setColor(Color.red);
+        //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
     }
 
     public long getAttackTimer() {
@@ -248,58 +230,20 @@ public class Hero extends Creature {
         if(xMove < 0){
             //left
             direction = 2;
-            lastAnim = new Animation(250, Assets.hero_walk_left);
             return animLeft.getCurrentFrame();
         }else if(xMove > 0){
             //right
-            lastAnim = new Animation(250, Assets.hero_walk_right);
             direction = 3;
             return animRight.getCurrentFrame();
         }else if(yMove < 0){
             //up
-            lastAnim = new Animation(250,Assets.hero_walk_up);
             direction = 1;
             return animUp.getCurrentFrame();
-        }else if(yMove > 0){
+        }else{
             //down
-            lastAnim = new Animation(250,Assets.hero_walk_down);
             direction = 0;
             return animDown.getCurrentFrame();
         }
-        else
-        {
-            return lastAnim.getFirstFrame();
-        }
     }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void AddtoScore(int val)
-    {
-        score += val;
-    }
-    public void AddtoLife(int val){
-        current_health += val;
-    }
-    public int getDamage()
-    {
-        return damage;
-    }
-    public void SetLevel(int val)
-    {
-        level = val;
-    }
-
-    public int GetLevel(){
-        return level;
-    }
-
-
 
 }

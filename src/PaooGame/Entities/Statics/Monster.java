@@ -30,8 +30,6 @@ public class Monster extends StaticEntity{
 
     @Override
     public void die() {
-        handler.getWorld().getItemManager().addItem(Item.diamondItem.createNew((int)x,(int)y));
+        handler.getWorld().getItemManager().addItem(Item.crystalItem.createNew((int)x,(int)y));
     }
-
-
 }

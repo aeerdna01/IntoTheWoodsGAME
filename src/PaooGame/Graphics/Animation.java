@@ -13,6 +13,7 @@ public class Animation {
         this.speed=speed;
         this.frames=frames;
         index=0;
+        timer = 0;
         lastTime=System.currentTimeMillis();
     }
 
@@ -34,7 +35,9 @@ public class Animation {
     }
 
     public void resetIndex(){ index = 0; }
+
     public BufferedImage getFirstFrame(){
         return frames[0];
     }
+
 }
