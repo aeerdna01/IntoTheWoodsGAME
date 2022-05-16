@@ -28,8 +28,11 @@ public class World {
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 15,Tile.TILE_HEIGHT * 15));
         itemManager = new ItemManager(handler);
 
-       // entityManager.AddEntity(new Monster(handler,Tile.TILE_WIDTH * 20, Tile.TILE_HEIGHT * 13));
-        entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 20 , Tile.TILE_HEIGHT * 14));
+
+        //entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 20 , Tile.TILE_HEIGHT * 14));
+
+        entityManager.AddEntity(new Diamond(handler,Tile.TILE_WIDTH * 14, Tile.TILE_HEIGHT * 15));
+        entityManager.AddEntity(new DiamondRed(handler,Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 15));
 
         entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 15));
         entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 20));

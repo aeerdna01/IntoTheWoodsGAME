@@ -61,7 +61,9 @@ public class Assets {
     public static BufferedImage soilT;
     public static BufferedImage mushroom1;
     public static BufferedImage mushroom2;
-    public static BufferedImage crystal;
+
+    public static BufferedImage diamond;
+    public static BufferedImage diamondRed;
 
     public static BufferedImage menu1;
     public static BufferedImage intro;
@@ -163,7 +165,9 @@ public class Assets {
         tree2 = ImageLoader.LoadImage("/textures/objects/tree2.png");
         tree3 = ImageLoader.LoadImage("/textures/objects/tree3.png");
         tree4 = ImageLoader.LoadImage("/textures/objects/tree4.png");
-        crystal = ImageLoader.LoadImage("/textures/objects/crystal.png");
+
+        diamond = ImageLoader.LoadImage("/textures/objects/diamond.png");
+        diamondRed = ImageLoader.LoadImage("/textures/objects/diamondRed.png");
 
         menu1 = ImageLoader.LoadImage("/textures/menu/menu1.png");
         intro = ImageLoader.LoadImage("/textures/menu/menu2.png");
@@ -179,7 +183,7 @@ public class Assets {
             passed = true;
         }
         now = System.nanoTime();
-        if(now-then>1000000000/0.7)
+        if(now-then>1000000000/0.16)
         {
             passed = false;
             return true;

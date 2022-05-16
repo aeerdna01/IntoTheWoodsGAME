@@ -11,7 +11,8 @@ public class Item {
 
     //HANDLER
     public  static Item[] items = new Item[256];
-    public static Item crystalItem = new Item(Assets.crystal,"Crystal", 0);
+    public static Item diamondItem = new Item(Assets.diamond,"Diamond", 0);
+    public static Item diamondRedItem = new Item(Assets.diamondRed,"DiamondRed", 1);
 
     //CLASS
     public static final int ITEMWIDTH = 64, ITEMHEIGHT = 64, PICKED_UP = -1;
@@ -21,7 +22,7 @@ public class Item {
     protected String name;
     protected final int id;
 
-    protected int x, y, count;
+    protected int x, y, count; //count for player inventory
 
     public Item(BufferedImage texture, String name, int id){
         this.texture = texture;

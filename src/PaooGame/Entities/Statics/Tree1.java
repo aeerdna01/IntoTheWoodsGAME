@@ -2,6 +2,7 @@ package PaooGame.Entities.Statics;
 
 import PaooGame.Graphics.Assets;
 import PaooGame.Handler;
+import PaooGame.Items.Item;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
@@ -32,6 +33,7 @@ public class Tree1 extends StaticEntity{
 
     @Override
     public void die() {
+        //handler.getWorld().getItemManager().addItem(Item.diamondItem.createNew((int)x,(int)y));
 
     }
 

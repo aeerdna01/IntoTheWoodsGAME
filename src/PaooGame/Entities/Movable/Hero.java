@@ -31,7 +31,7 @@ public class Hero extends Creature {
     protected static int level;
     private boolean attacking;
 
-    protected int damage;
+    protected int damage = 1;
     protected static int score;
 
     private static Hero instance;
@@ -51,8 +51,6 @@ public class Hero extends Creature {
         attackBounds.y = 20;
         attackBounds.width = 54;
         attackBounds.height = 32;
-
-
  */
         //Animations
         animDown = new Animation(250,Assets.hero_walk_down);
@@ -115,11 +113,8 @@ public class Hero extends Creature {
 /*
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
-
         if(attackTimer < attackCooldown)
             return;
-
-
  */
         Rectangle cb = getCollisionBounds(0, 0);
         Rectangle ar = new Rectangle();
@@ -143,13 +138,13 @@ public class Hero extends Creature {
             return;
         }
 
-       // attackTimer = 0;
+        // attackTimer = 0;
 
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar) && Assets.attackTimeElapsed()) {
-                e.hurt(damage);
+                e.hurt(1);
                 return;
             }
         }

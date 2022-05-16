@@ -3,6 +3,7 @@ package PaooGame.Entities.Movable;
 import PaooGame.Graphics.Animation;
 import PaooGame.Graphics.Assets;
 import PaooGame.Handler;
+import PaooGame.Items.Item;
 import PaooGame.States.State;
 
 import java.awt.*;
@@ -134,6 +135,8 @@ public class Chimera extends Enemy{
     @Override
     public void die() {
        // State.SetState(refLink.GetGame().GetWonState());
+       // handler.getWorld().getItemManager().addItem(Item.diamondItem.createNew((int)x,(int)y));
+
     }
 
     private BufferedImage getCurrentAnimationFrame(){
