@@ -11,7 +11,7 @@ public class Item {
 
     //HANDLER
     public  static Item[] items = new Item[256];
-    public static Item crystalItem = new Item(Assets.crystal,"Crystal", 0);
+    public static Item crystalItem = new Item(Assets.blueDiamond,"BlueDiamond", 0);
 
     //CLASS
     public static final int ITEMWIDTH = 64, ITEMHEIGHT = 64, PICKED_UP = -1;
