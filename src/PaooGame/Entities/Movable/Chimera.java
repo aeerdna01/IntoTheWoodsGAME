@@ -163,13 +163,13 @@ public class Chimera extends Creature{
     @Override
     public void draw(Graphics g) {
 
-        g.setColor(Color.gray);
+        g.setColor(Color.red);
         g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), 64, 10);
 
         g.setColor(Color.green);
-        g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), (64 * health) / 5, 10);
+        g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), (64 * health) / DEFAULT_HEALTH, 10);
 
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.drawRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), 64, 10);
 
 
