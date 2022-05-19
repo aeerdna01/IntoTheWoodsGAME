@@ -294,7 +294,7 @@ public class Hero extends Creature {
         health = health + x;
     }
     public void addScore(int x){
-     score = score + x;
+        score = score + x;
     }
     @Override
     public boolean isEnemy(){

@@ -26,16 +26,12 @@ public class Assets {
     public static BufferedImage[] chimera_walk_left;
     public static BufferedImage[] chimera_walk_right;
 
-    public static BufferedImage chimera_left;
-    public static BufferedImage chimera_right;
-
 
     public static BufferedImage[] hero_attack_down;
     public static BufferedImage[] hero_attack_up;
     public static BufferedImage[] hero_attack_left;
     public static BufferedImage[] hero_attack_right;
 
-    public static BufferedImage cavalerDead;
 
     public static BufferedImage monster1;
 
@@ -140,14 +136,13 @@ public class Assets {
         chimera_walk_left = new BufferedImage[7];
         for (int i = 0; i < 7; i++)
             chimera_walk_left[i] = enemy_lvl1_walk.crop(i, 1);
-            chimera_left = enemy_lvl1_walk.crop(0,1);
         for (int i = 0; i < 7; i++)
             chimera_walk_right[i] = enemy_lvl1_walk.crop(i, 3);
-            chimera_right = enemy_lvl1_walk.crop(0, 3);
         for (int i = 0; i < 7; i++)
             chimera_walk_up[i] = enemy_lvl1_walk.crop(i, 0);
         for (int i = 0; i < 7; i++)
             chimera_walk_down[i] = enemy_lvl1_walk.crop(i, 2);
+
 
 
         hero_attack_left = new BufferedImage[6];

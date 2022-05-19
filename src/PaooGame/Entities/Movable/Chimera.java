@@ -9,14 +9,24 @@ import java.awt.image.BufferedImage;
 
 public class Chimera extends Creature{
 
-    private BufferedImage image;
+    private Animation animDown;
+    private Animation animUp;
+    private Animation animRight;
+    private Animation animLeft;
+
 
     private long lastAttackTimer, attackCooldown=2000, attackTimer=attackCooldown;
+
+
 
     public Chimera(Handler handler, float x, float y) {
         super(handler, x, y, 80,80);
 
-        image = Assets.chimera_left;
+        animDown = new Animation(250,Assets.chimera_walk_down);
+        animUp = new Animation(250,Assets.chimera_walk_up);
+        animLeft = new Animation(250,Assets.chimera_walk_left);
+        animRight = new Animation(250,Assets.chimera_walk_right);
+
 
         bounds.x=22;
         bounds.y=44; //44
@@ -96,23 +106,28 @@ public class Chimera extends Creature{
     public void update() {
         move();
 
-       // animDown.update();
-       // animUp.update();
-       // animLeft.update();
-       // animRight.update();
-       // lastAnim.update();
+
 
         if(getxMove()>0)
         {
-            image = Assets.chimera_right;
+            //image = Assets.chimera_walk_right[0];
+            animRight.update();
         }
         if(getxMove()<0)
         {
-            image = Assets.chimera_left;
+            //image = Assets.chimera_walk_left[0];
+            animLeft.update();
         }
-        if(getyMove()>0 && getyMove()<0)
+
+        if(getyMove()>0)
         {
-            image = Assets.chimera_left;
+            //image = Assets.chimera_walk_down[0];
+            animDown.update();
+        }
+        if(getyMove()<0)
+        {
+            //image = Assets.chimera_walk_up[0];
+            animUp.update();
         }
 
         direction();
@@ -124,6 +139,25 @@ public class Chimera extends Creature{
     public boolean isEnemy()
     {
         return true;
+    }
+
+
+    private BufferedImage getCurrentAnimationFrame() {
+
+
+        if(xMove < 0){
+            //left
+            return animLeft.getCurrentFrame();
+        }else if(xMove > 0){
+            //right
+            return animRight.getCurrentFrame();
+        }else if(yMove < 0){
+            //up
+            return animUp.getCurrentFrame();
+        }else{
+            //down
+            return animDown.getCurrentFrame();
+        }
     }
 
     @Override
@@ -139,7 +173,7 @@ public class Chimera extends Creature{
         g.drawRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), 64, 10);
 
 
-        g.drawImage(image,(int)(x-handler.getGame().getGameCamera().getxOffset()),
+        g.drawImage(getCurrentAnimationFrame(),(int)(x-handler.getGame().getGameCamera().getxOffset()),
                 (int)(y-handler.getGame().getGameCamera().getyOffset()),width,height,null);
 
     }
