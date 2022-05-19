@@ -10,6 +10,8 @@ import PaooGame.Worlds.World;
 
 import java.awt.*;
 
+import static java.lang.Thread.sleep;
+
 public class GameState extends State {
 
     private Hero hero;

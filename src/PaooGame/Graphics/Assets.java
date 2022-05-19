@@ -114,10 +114,6 @@ public class Assets {
         btn_start[0] = ImageLoader.LoadImage("/textures/buttons/buttonPlayN.png");
         btn_start[1] = ImageLoader.LoadImage("/textures/buttons/buttonPlayP.png");
 
-        btn_play = new BufferedImage[2];
-        btn_play[0] = ImageLoader.LoadImage("/textures/buttons/PlayN.png");
-        btn_play[1] = ImageLoader.LoadImage("/textures/buttons/PlayP.png");
-
         btn_back = new BufferedImage[2];
         btn_back[0] = ImageLoader.LoadImage("/textures/buttons/backN.png");
         btn_back[1] = ImageLoader.LoadImage("/textures/buttons/backP.png");

@@ -127,6 +127,8 @@ public class World {
         if(entityManager.getHero().isDead()){
             playerdead = true;
             if (handler.getKeyManager().quit) {
+                playerdead = false;
+                loadLevel1();
                 State.setState(handler.getGame().introState);
             }
             else if(handler.getKeyManager().restart) {

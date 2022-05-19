@@ -139,11 +139,10 @@ public class Game implements Runnable
         handler= new Handler(this);
         gameCamera = new GameCamera(handler,0,0);
 
-        gameState = new GameState(handler);
-        helpState = new HelpState(handler);
-        introState = new IntroState(handler);
         menuState = new MenuState(handler);
-       // gameOverState = new GameOverState(handler);
+        helpState = new HelpState(handler);
+        gameState = new GameState(handler);
+        introState = new IntroState(handler);
 
         State.setState(menuState);
 
