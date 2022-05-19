@@ -36,10 +36,10 @@ public class HelpState extends State{
     @Override
     public void draw(Graphics g) {
 
+
         g.drawImage(Assets.help,0,0,handler.getWidth(), handler.getHeight(), null);
         uiManager.draw(g);
+        g.drawImage(Assets.sword,handler.getMouseManager().getMouseX(),handler.getMouseManager().getMouseY(),64,64,null);
 
-        //g.setColor(Color.red);
-        //g.fillRect(handler.getMouseManager().getMouseX(),handler.getMouseManager().getMouseY(),8,8);
     }
 }

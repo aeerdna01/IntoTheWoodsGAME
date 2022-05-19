@@ -19,7 +19,7 @@ public class GameState extends State {
     public GameState(Handler handler){
 
         super(handler);
-        world = new World(handler, "res/worlds/world1.txt");
+        world = new World(handler);
         handler.setWorld(world);
 
         //hero = new Hero(handler,300,300);
@@ -38,12 +38,16 @@ public class GameState extends State {
 
     @Override
     public void draw(Graphics g) {
-        //g.drawImage(Assets.player,0,0,null);
-
         world.draw(g);
+        g.drawImage(Assets.sword,handler.getMouseManager().getMouseX(),handler.getMouseManager().getMouseY(),64,64,null);
+        if(world.isPlayerdead())
+        {
+            g.drawImage(Assets.gameover,0,0,handler.getWidth(),handler.getHeight(),null);
 
-        //hero.draw(g);
-        // tree.draw(g);
-        //Tile.tiles[7].draw(g,3*Tile.TILE_WIDTH,3*Tile.TILE_HEIGHT);
+        }
+        if(world.isLevel1complete()){
+            g.drawImage(Assets.level2unlocked,0,0,handler.getWidth(),handler.getHeight(),null);
+        }
+
     }
 }

@@ -44,10 +44,8 @@ public class MenuState extends State {
     @Override
     public void draw(Graphics g) {
 
-       // g.setColor(Color.red);
-       //g.fillRect(handler.getMouseManager().getMouseX(),handler.getMouseManager().getMouseY(),8,8);
-
         g.drawImage(Assets.menu1,0,0,handler.getWidth(), handler.getHeight(), null);
         uiManager.draw(g);
+        g.drawImage(Assets.sword,handler.getMouseManager().getMouseX(),handler.getMouseManager().getMouseY(),64,64,null);
     }
 }

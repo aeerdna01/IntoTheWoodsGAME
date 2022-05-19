@@ -8,6 +8,11 @@ public class KeyManager implements KeyListener {
     private boolean[] keys;
     public boolean up, down, left, right;
     public boolean attack;
+    public boolean restart;
+    public boolean quit;
+    public boolean escape;
+    public boolean play;
+
     private boolean[] justPressed, cantPress;
 
     public void update(){
@@ -23,12 +28,20 @@ public class KeyManager implements KeyListener {
                 justPressed[i] = true;
             }
         }
+        if(keyJustPressed(KeyEvent.VK_ESCAPE)){
+            System.out.println("ESC just pressed!");
+        }
 
         up = keys[KeyEvent.VK_W];
         down = keys[KeyEvent.VK_S];
         left = keys[KeyEvent.VK_A];
         right = keys[KeyEvent.VK_D];
         attack = keys[KeyEvent.VK_SPACE];
+
+        quit = keys[KeyEvent.VK_Q];
+        restart = keys[KeyEvent.VK_R];
+        escape = keys[KeyEvent.VK_ESCAPE];
+        play = keys[KeyEvent.VK_ENTER];
 
     }
 

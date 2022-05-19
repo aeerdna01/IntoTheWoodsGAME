@@ -5,6 +5,7 @@ import PaooGame.Game;
 import PaooGame.Graphics.Animation;
 import PaooGame.Graphics.Assets;
 import PaooGame.Handler;
+import PaooGame.Inventory.Inventory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -27,14 +28,15 @@ public class Hero extends Creature {
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
 
     private int direction = 0;
-    protected static int level;
     private boolean attacking;
 
-    protected int damage;
-    protected static int score;
+    public  int score = 0;
+    private boolean dead = false;
 
     private static Hero instance;
 
+    //Inventory
+    private Inventory inventory;
 
     public Hero(Handler handler, float x, float y) {
         super(handler, x, y,Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -43,7 +45,7 @@ public class Hero extends Creature {
         bounds.width=19; //19
         bounds.height=19; //19
 
-        score = 0;
+        this.setHealth(5);
 
 /*
         attackBounds.x = 26;
@@ -62,6 +64,8 @@ public class Hero extends Creature {
         attackUp = new Animation(250,Assets.hero_attack_up);
         attackLeft = new Animation(250,Assets.hero_attack_left);
         attackRight = new Animation(250,Assets.hero_attack_right);
+
+        inventory = new Inventory(handler);
     }
 
     //Singleton
@@ -77,7 +81,7 @@ public class Hero extends Creature {
 
     @Override
     public void update() {
-        if(!Dead()) {
+        if(!isDead()) {
             //Animations
             animDown.update();
             animUp.update();
@@ -99,6 +103,9 @@ public class Hero extends Creature {
 
         //Attack
         checkAttacks();
+
+        //inventory
+        inventory.update();
     }
 
     private void checkAttacks() {
@@ -147,16 +154,17 @@ public class Hero extends Creature {
     @Override
     public void die(){
         System.out.println("YOU LOSE!");
-        Dead();
+
     }
 
-    public boolean Dead(){
-        if(current_health<=0)
-        {
-            return true;
+    @Override
+    public void hurt(int amt) {
+        health -= amt;
+        if (health <= 0) {
+            active = false;
+            dead = true;
+            die();
         }
-        else
-            return false;
     }
 
     private void getInput()
@@ -187,29 +195,58 @@ public class Hero extends Creature {
     }
     @Override
     public void draw(Graphics g) {
-        if(attacking) {
-            //g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-            if(direction == 1){
-                g.drawImage(attackUp.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 38),180,192 ,null);
-            }
-            if(direction == 2){
-                g.drawImage(attackLeft.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 50),180,192 ,null);
-            }
-            if(direction == 3){
-                g.drawImage(attackRight.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 77),186,192 ,null);
-            }
-            if(direction == 0){
-                g.drawImage(attackDown.getCurrentFrame(),(int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 65),186,192 ,null);
-            }
-            if(Assets.attackTimeElapsed()){
-                attacking = false;
-            }
 
-        }else{
-            g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+        if (!isDead()) {
+            g.setColor(Color.gray);
+            g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), 64, 10);
+
+            g.setColor(Color.green);
+            g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), (64 * health) / DEFAULT_HEALTH, 10);
+
+            g.setColor(Color.white);
+            g.drawRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), 64, 10);
+
+            g.setColor(Color.black);
+            g.fillRect( 20,25,250,100);
+            g.setColor(Color.white);
+            g.setFont(new Font("Arial", Font.BOLD, 30));
+            g.drawString("Score: " + score, 80, 60);
+            g.drawImage(Assets.blueDiamond,0,0,100,100,null);
+
+            g.setColor(Color.white);
+            g.setFont(new Font("Arial", Font.BOLD, 30));
+            g.drawString("Health: " + health, 80, 110);
+            g.drawImage(Assets.heart,5,50,90,90,null);
+
+            if (attacking) {
+                //g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+                if (direction == 1) {
+                    g.drawImage(attackUp.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 38), 180, 192, null);
+                }
+                if (direction == 2) {
+                    g.drawImage(attackLeft.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 50), 180, 192, null);
+                }
+                if (direction == 3) {
+                    g.drawImage(attackRight.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 77), 186, 192, null);
+                }
+                if (direction == 0) {
+                    g.drawImage(attackDown.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 55), (int) (y - handler.getGameCamera().getyOffset() - 65), 186, 192, null);
+                }
+                if (Assets.attackTimeElapsed()) {
+                    attacking = false;
+                }
+
+            } else {
+                g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+            }
+            // g.setColor(Color.red);
+            //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
+
         }
-        // g.setColor(Color.red);
-        //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
+    }
+
+    public void postRender(Graphics g){
+        inventory.draw(g);
     }
 
     public long getAttackTimer() {
@@ -246,4 +283,28 @@ public class Hero extends Creature {
         }
     }
 
+    public int getScore(){
+        return  score;
+    }
+    public boolean isDead(){
+        return  dead;
+    }
+
+    public void addHealth(int x){
+        health = health + x;
+    }
+    public void addScore(int x){
+     score = score + x;
+    }
+    @Override
+    public boolean isEnemy(){
+        return false;
+    }
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 }

@@ -44,5 +44,6 @@ public class IntroState extends State{
     @Override
     public void draw(Graphics g) {
         g.drawImage(Assets.intro,0,0,handler.getWidth(),handler.getHeight(),null);
+        g.drawImage(Assets.sword,handler.getMouseManager().getMouseX(),handler.getMouseManager().getMouseY(),64,64,null);
     }
 }

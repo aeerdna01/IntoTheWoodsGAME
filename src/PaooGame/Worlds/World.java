@@ -1,10 +1,12 @@
 package PaooGame.Worlds;
 
 import PaooGame.Entities.EntityManager;
+import PaooGame.Entities.Movable.Chimera;
 import PaooGame.Entities.Movable.Hero;
 import PaooGame.Entities.Statics.*;
 import PaooGame.Handler;
 import PaooGame.Items.ItemManager;
+import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
 import PaooGame.Utils.Utils;
 
@@ -16,21 +18,45 @@ public class World {
     private int spawnX, spawnY;
     private int[][] tiles;
 
+    private int level;
+    private int tempscore;
+    private boolean playerdead=false;
+    private boolean level1complete = false;
+
     //entities
     private EntityManager entityManager;
 
     //items
     private ItemManager itemManager;
 
-    public World(Handler handler, String path){
+    public World(Handler handler){
         this.handler = handler;
+        loadLevel1();
+    }
 
+    public void loadLevel1(){
+        level = 1;
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 15,Tile.TILE_HEIGHT * 15));
 
         itemManager = new ItemManager(handler);
 
-       // entityManager.AddEntity(new Monster(handler,Tile.TILE_WIDTH * 20, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 23));
 
+
+        entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 5));
+
+
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 25));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2));
 
         entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 15));
         entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 20));
@@ -59,7 +85,25 @@ public class World {
         entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 20));
         entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 23, Tile.TILE_HEIGHT * 25));
 
-        loadWorld(path);
+        loadWorld("res/worlds/world1.txt");
+
+        entityManager.getHero().setX(spawnX);
+        entityManager.getHero().setY(spawnY);
+    }
+    public void loadLevel2(){
+        level = 2;
+        entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 15,Tile.TILE_HEIGHT * 15));
+
+        itemManager = new ItemManager(handler);
+
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 23));
+
+
+        loadWorld("res/worlds/world2.txt");
 
         entityManager.getHero().setX(spawnX);
         entityManager.getHero().setY(spawnY);
@@ -68,7 +112,36 @@ public class World {
     public void update(){
         itemManager.update();
         entityManager.update();
+
+        if(level == 1){
+            tempscore = entityManager.getHero().score;
+            if(tempscore >= 10){
+                level1complete = true;
+                if(handler.getKeyManager().play) {
+                    level1complete = false;
+                    loadLevel2();
+                }
+            }
+        }
+
+        if(entityManager.getHero().isDead()){
+            playerdead = true;
+            if (handler.getKeyManager().quit) {
+                State.setState(handler.getGame().introState);
+            }
+            else if(handler.getKeyManager().restart) {
+                playerdead = false;
+                if (level == 1) {
+                    loadLevel1();
+                }
+                if(level == 2){
+                    loadLevel2();
+                }
+            }
+        }
     }
+
+
     public void draw(Graphics g){
         int xStart=(int)Math.max(0, handler.getGameCamera().getxOffset()/Tile.TILE_WIDTH);
         int xEnd=(int)Math.min(width,(handler.getGameCamera().getxOffset()+ handler.getWidth())/Tile.TILE_WIDTH + 1);
@@ -96,18 +169,7 @@ public class World {
     }
     private void loadWorld(String path){
 
-        //temporar code
-        /*
-        width=5;
-        height=5;
-        tiles = new int[width][height];
 
-        for(int x=0; x<width; x++) {
-            for (int y = 0; y < height; y++) {
-                tiles[x][y]=1;
-            }
-        }
-         */
         String file = Utils.loadFileAsString(path);
         String[] tokens = file.split("\\s+");
         width=Utils.parseInt(tokens[0]);
@@ -153,5 +215,25 @@ public class World {
 
     public void setItemManager(ItemManager itemManager) {
         this.itemManager = itemManager;
+    }
+
+    public boolean isPlayerdead() {
+        return playerdead;
+    }
+
+    public void setPlayerdead(boolean playerdead) {
+        this.playerdead = playerdead;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public boolean isLevel1complete() {
+        return level1complete;
     }
 }

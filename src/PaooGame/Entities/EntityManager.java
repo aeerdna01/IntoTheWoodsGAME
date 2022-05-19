@@ -12,7 +12,8 @@ public class EntityManager {
 
     private Handler handler;
     private Hero hero;
-    private ArrayList<Entity> entities; //doesn t have a size
+    private ArrayList<Entity> entities;//doesn t have a size
+
     private Comparator<Entity> renderSorter = new Comparator<Entity>() {
         @Override
         public int compare(Entity a, Entity b) {
@@ -24,13 +25,17 @@ public class EntityManager {
 
     public EntityManager(Handler handler, Hero hero){
         this.handler=handler;
+
         this.hero=hero;
+
         entities = new ArrayList<Entity>();
+
         AddEntity(hero);
     }
 
     public void update(){
         Iterator<Entity> it = entities.iterator();
+
         while(it.hasNext()){
             Entity e = it.next();
             e.update();
@@ -44,7 +49,10 @@ public class EntityManager {
         for(Entity e:entities){
             e.draw(g);
         }
+
+        hero.postRender(g);
     }
+
 
     public void AddEntity(Entity e){
         entities.add(e);

@@ -28,6 +28,15 @@ public class Tile
     public static Tile mushroom2Tile   = new Mushroom2Tile(11);
     public static Tile soilPTile       = new SoilPTile(12);
     public static Tile soilTTile       = new SoilTTile(13);
+    public static Tile lvl2grass      = new Grass2Tile(14);
+    public static Tile lvl2stone       = new Rock2Tile(15);
+    public static Tile verticalBoard   = new VBoardTile(16);
+    public static Tile horizontalBoard = new HBoardTile(17);
+    public static Tile DverticalBoard  = new DVBoardTile(18);
+    public static Tile DorizontalBoard = new DHBoardTile(19);
+    public static Tile bush4Tile       = new Bush4Tile(20);
+    public static Tile bush5Tile       = new Bush5Tile(21);
+    public static Tile wood2Tile        = new Wood2Tile(22);
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/

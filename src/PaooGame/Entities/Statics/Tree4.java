@@ -34,4 +34,6 @@ public class Tree4 extends StaticEntity{
     public void die() {
 
     }
+
+
 }

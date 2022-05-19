@@ -3,12 +3,14 @@ package PaooGame;
 import PaooGame.Graphics.GameCamera;
 import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
+import PaooGame.States.State;
 import PaooGame.Worlds.World;
 
 public class Handler {
 
     private Game game;
     private World world;
+    private State state;
 
     public Handler(Game game){
         this.game=game;
@@ -48,5 +50,13 @@ public class Handler {
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

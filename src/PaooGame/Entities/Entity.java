@@ -14,16 +14,16 @@ public abstract class Entity {
 
 
     protected  int health;
-    protected  int current_health;
-    public static final int DEFAULT_HEALTH=10;
+ //   protected  int current_health;
+    public static final int DEFAULT_HEALTH=5;
 
     protected  boolean active = true;
 
 
-    protected final Rectangle attackBounds;
-    protected Rectangle normalBounds;
+  //  protected final Rectangle attackBounds;
+   // protected Rectangle normalBounds;
     protected Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
-    protected Rectangle attackbounds;
+ //   protected Rectangle attackbounds;
 
     public Entity(Handler handler, float x, float y, int width, int height){
         this.handler=handler;
@@ -32,12 +32,13 @@ public abstract class Entity {
         this.width=width;
         this.height=height;
         health=DEFAULT_HEALTH;
-        current_health = health;
+       // current_health = health;
 
-        normalBounds= new Rectangle(0,0,width, height);
-        attackBounds = new Rectangle(0, 0, width, height);
-        bounds = normalBounds;
-        attackbounds = attackBounds;
+       // normalBounds= new Rectangle(0,0,width, height);
+      //  attackBounds = new Rectangle(0, 0, width, height);
+      //  bounds = normalBounds;
+      //  attackbounds = attackBounds;
+        bounds = new Rectangle(0,0,width, height);
     }
 
     public abstract void update();
@@ -67,9 +68,12 @@ public abstract class Entity {
     public Rectangle getCollisionBounds(float xOffset, float yOffset){
         return new Rectangle((int) (x + bounds.x + xOffset),(int) (y + bounds.y + yOffset), bounds.width,bounds.height);
     }
+    /*
     public Rectangle getAttackBounds(float xOffset, float yOffset){
         return new Rectangle((int)(x+ attackbounds.x+xOffset), (int) (y+attackbounds.y+yOffset), attackbounds.width, attackbounds.height);
     }
+
+     */
 
 
     public float getY() {
@@ -119,7 +123,11 @@ public abstract class Entity {
     public void setActive(boolean active) {
         this.active = active;
     }
-
+    public boolean isEnemy()
+    {
+        return false;
+    }
+/*
     public int getCurrent_health() {
         return current_health;
     }
@@ -131,15 +139,17 @@ public abstract class Entity {
     public Rectangle getNormalBounds() {
         return normalBounds;
     }
-
+*/
     public void setNormalBounds(Rectangle normalBounds) {
         bounds = normalBounds;
     }
-
+/*
     public Rectangle getAttackBounds() {
         return attackBounds;
     }
     public void setAttackBounds() {
         bounds = attackBounds;
     }
+
+ */
 }

@@ -20,7 +20,7 @@ public abstract class Creature extends Entity {
         speed=DEFAULT_SPEED;
         xMove=0;
         yMove=0;
-        current_health = health;
+       // current_health = health;
     }
 
     public void move(){

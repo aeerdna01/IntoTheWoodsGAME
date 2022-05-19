@@ -74,6 +74,7 @@ public class Game implements Runnable
     public State menuState;
     public State introState;
     public State helpState;
+   // public State gameOverState;
 
     //Input
     private KeyManager keyManager;
@@ -142,6 +143,7 @@ public class Game implements Runnable
         helpState = new HelpState(handler);
         introState = new IntroState(handler);
         menuState = new MenuState(handler);
+       // gameOverState = new GameOverState(handler);
 
         State.setState(menuState);
 
@@ -310,29 +312,11 @@ public class Game implements Runnable
 
         /// operatie de desenare
 
-        // Tile.grassTile.Draw(g, 0 * Tile.TILE_WIDTH, 0);
-        // Tile.soilTile.Draw(g, 1 * Tile.TILE_WIDTH, 0);
-        // Tile.waterTile.Draw(g, 2 * Tile.TILE_WIDTH, 0);
-        // Tile.mountainTile.Draw(g, 3 * Tile.TILE_WIDTH, 0);
-        //Tile.treeTile.Draw(g, 4 * Tile.TILE_WIDTH, 0);
-
-        //g.fillRect(0,0,width,height);
-        //g.setColor(Color.red);
-        //g.fillRect(3 * Tile.TILE_WIDTH, 2 * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-        //g.drawImage(testImage,0,0,null);
-        //g.drawImage(sheet.crop(0,0),5,5,null);
-
-        //  g.drawImage(Assets.grass,0,0,null);
-        //    g.drawImage(Assets.player,x,0*Tile.TILE_HEIGHT,null);
-        //  g.drawImage(Assets.stone,3*Tile.TILE_HEIGHT,3*Tile.TILE_WIDTH,null);
-        //    g.drawImage(Assets.water,25,25,null);
-
 
         if(State.getState()!=null){
             State.getState().draw(g);
         }
 
-        // end operatie de desenare
 
         /// Se afiseaza pe ecran
         bs.show();
@@ -353,5 +337,7 @@ public class Game implements Runnable
     public State getMenu2State() {
         return introState;
     }
+
+
 }
 
