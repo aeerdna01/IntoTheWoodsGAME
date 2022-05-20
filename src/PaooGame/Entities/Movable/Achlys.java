@@ -7,7 +7,7 @@ import PaooGame.Handler;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Chimera extends Creature{
+public class Achlys extends Creature{
 
     private Animation animDown;
     private Animation animUp;
@@ -20,13 +20,13 @@ public class Chimera extends Creature{
 
 
 
-    public Chimera(Handler handler, float x, float y) {
+    public Achlys(Handler handler, float x, float y) {
         super(handler, x, y, 80,80);
 
-        animDown = new Animation(250,Assets.chimera_walk_down);
-        animUp = new Animation(250,Assets.chimera_walk_up);
-        animLeft = new Animation(250,Assets.chimera_walk_left);
-        animRight = new Animation(250,Assets.chimera_walk_right);
+        animDown = new Animation(250,Assets.achlys_walk_down);
+        animUp = new Animation(250,Assets.achlys_walk_up);
+        animLeft = new Animation(250,Assets.achlys_walk_left);
+        animRight = new Animation(250,Assets.achlys_walk_right);
 
 
         bounds.x=22;

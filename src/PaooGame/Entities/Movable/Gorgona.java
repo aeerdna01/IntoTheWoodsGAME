@@ -7,7 +7,7 @@ import PaooGame.Handler;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Chimera extends Creature{
+public class Gorgona extends Creature{
 
     private Animation animDown;
     private Animation animUp;
@@ -20,13 +20,13 @@ public class Chimera extends Creature{
 
 
 
-    public Chimera(Handler handler, float x, float y) {
+    public Gorgona(Handler handler, float x, float y) {
         super(handler, x, y, 80,80);
 
-        animDown = new Animation(250,Assets.chimera_walk_down);
-        animUp = new Animation(250,Assets.chimera_walk_up);
-        animLeft = new Animation(250,Assets.chimera_walk_left);
-        animRight = new Animation(250,Assets.chimera_walk_right);
+        animDown = new Animation(250,Assets.gorgona_walk_down);
+        animUp = new Animation(250,Assets.gorgona_walk_up);
+        animLeft = new Animation(250,Assets.gorgona_walk_left);
+        animRight = new Animation(250,Assets.gorgona_walk_right);
 
 
         bounds.x=22;
@@ -109,23 +109,19 @@ public class Chimera extends Creature{
 
         if(getxMove()>0)
         {
-            //image = Assets.chimera_walk_right[0];
             animRight.update();
         }
         if(getxMove()<0)
         {
-            //image = Assets.chimera_walk_left[0];
             animLeft.update();
         }
 
         if(getyMove()>0)
         {
-            //image = Assets.chimera_walk_down[0];
             animDown.update();
         }
         if(getyMove()<0)
         {
-            //image = Assets.chimera_walk_up[0];
             animUp.update();
         }
 
@@ -180,6 +176,6 @@ public class Chimera extends Creature{
     public void die() {
         x=this.getX();
         y=this.getY();
-        handler.getWorld().getEntityManager().getHero().score += 1;
+        handler.getWorld().getEntityManager().getHero().score += 10;
     }
 }

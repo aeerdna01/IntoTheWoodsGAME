@@ -26,14 +26,23 @@ public class Assets {
     public static BufferedImage[] chimera_walk_left;
     public static BufferedImage[] chimera_walk_right;
 
+    public static BufferedImage[] gorgona_walk_down;
+    public static BufferedImage[] gorgona_walk_up;
+    public static BufferedImage[] gorgona_walk_left;
+    public static BufferedImage[] gorgona_walk_right;
+
+    public static BufferedImage[] achlys_walk_down;
+    public static BufferedImage[] achlys_walk_up;
+    public static BufferedImage[] achlys_walk_left;
+    public static BufferedImage[] achlys_walk_right;
+
+
 
     public static BufferedImage[] hero_attack_down;
     public static BufferedImage[] hero_attack_up;
     public static BufferedImage[] hero_attack_left;
     public static BufferedImage[] hero_attack_right;
 
-
-    public static BufferedImage monster1;
 
 
     public static BufferedImage[] btn_start;
@@ -46,6 +55,11 @@ public class Assets {
     public static BufferedImage tree2;
     public static BufferedImage tree3;
     public static BufferedImage tree4;
+
+    //level2
+    public static BufferedImage tree5;
+    public static BufferedImage tree6;
+    public static BufferedImage wall;
 
 
     //level1
@@ -75,6 +89,12 @@ public class Assets {
     public static BufferedImage lvl2bush2;
     public static BufferedImage lvl2woods;
 
+    //level3
+    public static BufferedImage pavement;
+    public static BufferedImage lvl3grass;
+    public static BufferedImage lava;
+    public static BufferedImage castle;
+
 
 
     public static BufferedImage blueDiamond;
@@ -88,6 +108,7 @@ public class Assets {
 
     public static BufferedImage gameover;
     public static BufferedImage level2unlocked;
+    public static BufferedImage level3unlocked;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -99,10 +120,12 @@ public class Assets {
         /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
         SpriteSheet hero = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/cavaler_walk.png"), 64, 64);
         SpriteSheet hero_attack = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/cavaler_attack.png"), 192, 180);
-        SpriteSheet enemy_lvl1_walk = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/chimera_walk.png"), 64, 64);
+        SpriteSheet enemy_lvl1 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/chimera_walk.png"), 64, 64);
+        SpriteSheet enemy_lvl2 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/gorgona_walk.png"),64,64);
+        SpriteSheet enemy_lvl3 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/achlys_walk.png"),64,64);
         SpriteSheet level1 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/level1.png"), 32, 32);
         SpriteSheet level2 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/level2.png"), 32, 32);
-
+        SpriteSheet level3 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/level3.png"),32,32);
 
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 
@@ -114,8 +137,6 @@ public class Assets {
         btn_back[0] = ImageLoader.LoadImage("/textures/buttons/backN.png");
         btn_back[1] = ImageLoader.LoadImage("/textures/buttons/backP.png");
 
-
-        monster1 = enemy_lvl1_walk.crop(0, 1);
 
         hero_walk_down = new BufferedImage[9];
         hero_walk_up = new BufferedImage[9];
@@ -130,18 +151,44 @@ public class Assets {
         for (int i = 0; i < 9; i++)
             hero_walk_down[i] = hero.crop(i, 2);
 
+        achlys_walk_down = new BufferedImage[9];
+        achlys_walk_up = new BufferedImage[9];
+        achlys_walk_right = new BufferedImage[9];
+        achlys_walk_left = new BufferedImage[9];
+        for (int i = 0; i < 9; i++)
+            achlys_walk_left[i] = enemy_lvl3.crop(i, 1);
+        for (int i = 0; i < 9; i++)
+            achlys_walk_right[i] = enemy_lvl3.crop(i, 3);
+        for (int i = 0; i < 9; i++)
+            achlys_walk_up[i] = enemy_lvl3.crop(i, 0);
+        for (int i = 0; i < 9; i++)
+            achlys_walk_down[i] = enemy_lvl3.crop(i, 2);
+
         chimera_walk_down = new BufferedImage[7];
         chimera_walk_up = new BufferedImage[7];
         chimera_walk_right = new BufferedImage[7];
         chimera_walk_left = new BufferedImage[7];
         for (int i = 0; i < 7; i++)
-            chimera_walk_left[i] = enemy_lvl1_walk.crop(i, 1);
+            chimera_walk_left[i] = enemy_lvl1.crop(i, 1);
         for (int i = 0; i < 7; i++)
-            chimera_walk_right[i] = enemy_lvl1_walk.crop(i, 3);
+            chimera_walk_right[i] = enemy_lvl1.crop(i, 3);
         for (int i = 0; i < 7; i++)
-            chimera_walk_up[i] = enemy_lvl1_walk.crop(i, 0);
+            chimera_walk_up[i] = enemy_lvl1.crop(i, 0);
         for (int i = 0; i < 7; i++)
-            chimera_walk_down[i] = enemy_lvl1_walk.crop(i, 2);
+            chimera_walk_down[i] = enemy_lvl1.crop(i, 2);
+
+        gorgona_walk_down = new BufferedImage[9];
+        gorgona_walk_up = new BufferedImage[9];
+        gorgona_walk_right = new BufferedImage[9];
+        gorgona_walk_left = new BufferedImage[9];
+        for (int i = 0; i < 9; i++)
+            gorgona_walk_left[i] = enemy_lvl2.crop(i, 1);
+        for (int i = 0; i < 9; i++)
+            gorgona_walk_right[i] = enemy_lvl2.crop(i, 3);
+        for (int i = 0; i < 9; i++)
+            gorgona_walk_up[i] = enemy_lvl2.crop(i, 0);
+        for (int i = 0; i < 9; i++)
+            gorgona_walk_down[i] = enemy_lvl2.crop(i, 2);
 
 
 
@@ -183,10 +230,24 @@ public class Assets {
         lvl2bush2 = level2.crop(0,4);
         lvl2woods = level2.crop(0,5);
 
+        lvl3grass = level3.crop(0,0);
+        lava = level3.crop(0,1);
+        pavement = level3.crop(0,2);
+
+
+
         tree1 = ImageLoader.LoadImage("/textures/objects/tree1.png");
         tree2 = ImageLoader.LoadImage("/textures/objects/tree2.png");
         tree3 = ImageLoader.LoadImage("/textures/objects/tree3.png");
         tree4 = ImageLoader.LoadImage("/textures/objects/tree4.png");
+
+        tree5 = ImageLoader.LoadImage("/textures/objects/tree5.png");
+        tree6 = ImageLoader.LoadImage("/textures/objects/tree6.png");
+        wall = ImageLoader.LoadImage("/textures/objects/wall.png");
+
+        castle = ImageLoader.LoadImage("/textures/objects/castle.png");
+
+
 
         blueDiamond = ImageLoader.LoadImage("/textures/objects/blueDiamond.png");
         heart = ImageLoader.LoadImage("/textures/objects/heart.png");
@@ -198,7 +259,7 @@ public class Assets {
         help = ImageLoader.LoadImage("/textures/menu/help.png");
         gameover = ImageLoader.LoadImage("/textures/menu/gameover.png");
         level2unlocked = ImageLoader.LoadImage("/textures/menu/level2unlocked.png");
-
+        level3unlocked = ImageLoader.LoadImage("/textures/menu/level3unlocked.png");
     }
 
     public static boolean attackTimeElapsed() {

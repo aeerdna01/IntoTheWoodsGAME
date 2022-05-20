@@ -32,12 +32,6 @@ public abstract class Entity {
         this.width=width;
         this.height=height;
         health=DEFAULT_HEALTH;
-       // current_health = health;
-
-       // normalBounds= new Rectangle(0,0,width, height);
-      //  attackBounds = new Rectangle(0, 0, width, height);
-      //  bounds = normalBounds;
-      //  attackbounds = attackBounds;
         bounds = new Rectangle(0,0,width, height);
     }
 
@@ -68,12 +62,7 @@ public abstract class Entity {
     public Rectangle getCollisionBounds(float xOffset, float yOffset){
         return new Rectangle((int) (x + bounds.x + xOffset),(int) (y + bounds.y + yOffset), bounds.width,bounds.height);
     }
-    /*
-    public Rectangle getAttackBounds(float xOffset, float yOffset){
-        return new Rectangle((int)(x+ attackbounds.x+xOffset), (int) (y+attackbounds.y+yOffset), attackbounds.width, attackbounds.height);
-    }
 
-     */
 
 
     public float getY() {
@@ -127,29 +116,9 @@ public abstract class Entity {
     {
         return false;
     }
-/*
-    public int getCurrent_health() {
-        return current_health;
-    }
 
-    public void setCurrent_health(int current_health) {
-        this.current_health = current_health;
-    }
-
-    public Rectangle getNormalBounds() {
-        return normalBounds;
-    }
-*/
     public void setNormalBounds(Rectangle normalBounds) {
         bounds = normalBounds;
     }
-/*
-    public Rectangle getAttackBounds() {
-        return attackBounds;
-    }
-    public void setAttackBounds() {
-        bounds = attackBounds;
-    }
 
- */
 }

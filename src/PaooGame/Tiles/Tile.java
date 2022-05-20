@@ -37,6 +37,9 @@ public class Tile
     public static Tile bush4Tile       = new Bush4Tile(20);
     public static Tile bush5Tile       = new Bush5Tile(21);
     public static Tile wood2Tile        = new Wood2Tile(22);
+    public static Tile lvl3grass        = new Grass3Tile(23);
+    public static Tile lava             = new LavaTile(24);
+    public static Tile pavement         = new PavementTile(25);
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/

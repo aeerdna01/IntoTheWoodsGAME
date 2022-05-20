@@ -50,6 +50,10 @@ public class GameState extends State {
         if(world.isLevel1complete()){
             g.drawImage(Assets.level2unlocked,0,0,handler.getWidth(),handler.getHeight(),null);
         }
+        if (world.isLevel2complete())
+        {
+            g.drawImage(Assets.level3unlocked,0,0,handler.getWidth(),handler.getHeight(),null);
+        }
 
     }
 }
