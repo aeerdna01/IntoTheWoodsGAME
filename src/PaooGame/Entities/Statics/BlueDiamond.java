@@ -38,7 +38,7 @@ public class BlueDiamond extends StaticEntity{
 
         if (handler.getWorld().getEntityManager().getHero().getCollisionBounds(0, 0).intersects(ar)) {
             this.die();
-            handler.getWorld().getEntityManager().getHero().addScore(5);
+            handler.getWorld().getEntityManager().getHero().addScore(1);
         }
     }
 

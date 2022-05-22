@@ -14,6 +14,8 @@ public class Chimera extends Creature{
     private Animation animRight;
     private Animation animLeft;
 
+    private boolean dead = false;
+
 
 
     private long lastAttackTimer, attackCooldown=2000, attackTimer=attackCooldown;
@@ -36,7 +38,7 @@ public class Chimera extends Creature{
 
 
         speed = 0.5f;
-        health = 5;
+        this.setHealth(5);
     }
 
 
@@ -178,8 +180,14 @@ public class Chimera extends Creature{
 
     @Override
     public void die() {
+        if(health <= 0)
+            dead = true;
         x=this.getX();
         y=this.getY();
-        handler.getWorld().getEntityManager().getHero().score += 1;
+        handler.getWorld().getEntityManager().getHero().score += 5;
+    }
+
+    public boolean isChimeraDead(){
+        return dead;
     }
 }

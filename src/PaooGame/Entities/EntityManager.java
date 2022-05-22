@@ -1,5 +1,6 @@
 package PaooGame.Entities;
 
+import PaooGame.Entities.Movable.Chimera;
 import PaooGame.Entities.Movable.Hero;
 import PaooGame.Handler;
 

@@ -165,6 +165,7 @@ public class World {
 
         if(level == 1){
             tempscore = entityManager.getHero().score;
+
             if(tempscore >= 1){
                 level1complete = true;
                 if(handler.getKeyManager().play) {
@@ -300,4 +301,6 @@ public class World {
     public boolean isLevel2complete() {
         return level2complete;
     }
+
+
 }
