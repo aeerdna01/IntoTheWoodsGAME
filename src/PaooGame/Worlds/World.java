@@ -198,6 +198,12 @@ public class World {
                 if (level == 1) {
                     loadLevel1();
                 }
+                if (level == 2) {
+                    loadLevel1();
+                }
+                if (level == 3) {
+                    loadLevel1();
+                }
             }
         }
     }

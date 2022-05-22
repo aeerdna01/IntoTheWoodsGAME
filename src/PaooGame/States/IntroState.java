@@ -9,9 +9,12 @@ import java.awt.*;
 public class IntroState extends State{
 
     private UIManager uiManager;
+  //  private boolean soundflag = false;
 
     public IntroState(Handler handler) {
         super(handler);
+        Assets.MenuMusic.setVolume(0.25);
+       // Assets.MenuMusic.play();
 
     }
 
@@ -23,6 +26,7 @@ public class IntroState extends State{
             if(handler.getMouseManager().getMouseY() >= 55 && handler.getMouseManager().getMouseY() <= 120) {
                 if(handler.getMouseManager().isLeftPressed())
                 {
+                  //  Assets.MenuMusic.stop();
                     State.setState(handler.getGame().gameState);
 
                 }
@@ -33,6 +37,7 @@ public class IntroState extends State{
             if(handler.getMouseManager().getMouseY() >= 235 && handler.getMouseManager().getMouseY() <= 290) {
                 if(handler.getMouseManager().isLeftPressed())
                 {
+                    //Assets.MenuMusic.stop();
                     State.setState(handler.getGame().helpState);
 
                 }

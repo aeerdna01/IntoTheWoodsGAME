@@ -110,6 +110,11 @@ public class Assets {
     public static BufferedImage level2unlocked;
     public static BufferedImage level3unlocked;
 
+    public static Audio MenuMusic;
+    public static Audio Level1music;
+    public static Audio Level2music;
+    public static Audio Level3music;
+
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
 
@@ -260,6 +265,12 @@ public class Assets {
         gameover = ImageLoader.LoadImage("/textures/menu/gameover.png");
         level2unlocked = ImageLoader.LoadImage("/textures/menu/level2unlocked.png");
         level3unlocked = ImageLoader.LoadImage("/textures/menu/level3unlocked.png");
+
+
+        MenuMusic = new Audio("res/textures/music/menu.mp3");
+        //Level1music = new Audio("/textures/music/level1.mp3");
+        //Level2music = new Audio("/textures/music/level2.mp3");
+       // Level3music = new Audio("/textures/music/level3.mp3");
     }
 
     public static boolean attackTimeElapsed() {
