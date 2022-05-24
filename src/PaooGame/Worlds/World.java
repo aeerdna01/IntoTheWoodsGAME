@@ -1,10 +1,7 @@
 package PaooGame.Worlds;
 
 import PaooGame.Entities.EntityManager;
-import PaooGame.Entities.Movable.Achlys;
-import PaooGame.Entities.Movable.Chimera;
-import PaooGame.Entities.Movable.Gorgona;
-import PaooGame.Entities.Movable.Hero;
+import PaooGame.Entities.Movable.*;
 import PaooGame.Entities.Statics.*;
 import PaooGame.Exceptions.EmptyWorldFileException;
 import PaooGame.Exceptions.UnknownTileException;
@@ -15,6 +12,7 @@ import PaooGame.Tiles.Tile;
 import PaooGame.Utils.Utils;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 
 /*! \class public class World
@@ -59,19 +57,32 @@ public class World {
     public void loadLevel1(){
         level = 1;
         Hero.setLevel(level);
+
+       try{
+           handler.getDataBase().updateEnemyKilled(0);
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 15,Tile.TILE_HEIGHT * 15));
 
+        entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 13));
 
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 5));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 23));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 25, Tile.TILE_HEIGHT * 18));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 29));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 4, Tile.TILE_HEIGHT * 10));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 25, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 6));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 10));
 
-
-        entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 13));
-       // entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 17));
-       // entityManager.AddEntity(new Chimera(handler,Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 5));
 
 
         entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 17));
@@ -107,6 +118,8 @@ public class World {
         entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 20));
         entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 23, Tile.TILE_HEIGHT * 25));
 
+
+
         //loadWorld("res/worlds/empty_world.txt");
         loadWorld("res/worlds/world1.txt");
 
@@ -116,15 +129,44 @@ public class World {
     public void loadLevel2(){
         level = 2;
         Hero.setLevel(level);
+
+        try{
+            handler.getDataBase().updateEnemyKilled(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            Hero.setScore(handler.getDataBase().getScore());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 15,Tile.TILE_HEIGHT * 15));
+
+        entityManager.AddEntity(new Gorgona(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 13));
 
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 5));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 23));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 25, Tile.TILE_HEIGHT * 18));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 29));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 4, Tile.TILE_HEIGHT * 10));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 25, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 6));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 10));
 
-        entityManager.AddEntity(new Gorgona(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 13));
+
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 25));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2));
 
         entityManager.AddEntity(new Tree5(handler,Tile.TILE_WIDTH * 16, Tile.TILE_HEIGHT * 12));
         entityManager.AddEntity(new Tree5(handler,Tile.TILE_WIDTH * 15, Tile.TILE_HEIGHT * 0));
@@ -139,12 +181,41 @@ public class World {
         entityManager.AddEntity(new Tree6(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 17));
         entityManager.AddEntity(new Tree6(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 26));
 
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 15));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 26, Tile.TILE_HEIGHT * 14));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 9));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 34, Tile.TILE_HEIGHT * 16));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 35, Tile.TILE_HEIGHT * 21));
+
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 0));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 10));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 33, Tile.TILE_HEIGHT * 9));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 25, Tile.TILE_HEIGHT * 23));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 34, Tile.TILE_HEIGHT * 26));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 20));
+
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 13, Tile.TILE_HEIGHT * 0));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 15, Tile.TILE_HEIGHT * 9));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 0, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 18, Tile.TILE_HEIGHT * 25));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 17));
+
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 26, Tile.TILE_HEIGHT * 4));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 32, Tile.TILE_HEIGHT * -2));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 35, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 23, Tile.TILE_HEIGHT * 25));
+
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 16));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 16));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 16));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 5));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 3, Tile.TILE_HEIGHT * 5));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 12));
+
+
 
         loadWorld("res/worlds/world2.txt");
 
@@ -155,6 +226,18 @@ public class World {
     public void loadLevel3(){
         level = 3;
         Hero.setLevel(level);
+
+        try{
+            handler.getDataBase().updateEnemyKilled(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            Hero.setScore(handler.getDataBase().getScore());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 20,Tile.TILE_HEIGHT * 20));
 
 
@@ -162,11 +245,62 @@ public class World {
 
         entityManager.AddEntity(new Castle(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 8));
 
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 25));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new Heart(handler,Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2));
+
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 26, Tile.TILE_HEIGHT * 4));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 32, Tile.TILE_HEIGHT * -2));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 35, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 23, Tile.TILE_HEIGHT * 25));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 10));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 26));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 4, Tile.TILE_HEIGHT * 10));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 25, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 6));
+        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 10));
+
+
+
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 15));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 15));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 15));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 5));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 4, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 15, Tile.TILE_HEIGHT * 15));
+
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 15));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 26, Tile.TILE_HEIGHT * 14));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 9));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 34, Tile.TILE_HEIGHT * 16));
+        entityManager.AddEntity(new Tree1(handler,Tile.TILE_WIDTH * 35, Tile.TILE_HEIGHT * 21));
+
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 0));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 21, Tile.TILE_HEIGHT * 10));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 33, Tile.TILE_HEIGHT * 9));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 25, Tile.TILE_HEIGHT * 23));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 34, Tile.TILE_HEIGHT * 26));
+        entityManager.AddEntity(new Tree2(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 20));
+
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 13, Tile.TILE_HEIGHT * 0));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 15, Tile.TILE_HEIGHT * 9));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 0, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 18, Tile.TILE_HEIGHT * 25));
+        entityManager.AddEntity(new Tree3(handler,Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 17));
+
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 26, Tile.TILE_HEIGHT * 4));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 32, Tile.TILE_HEIGHT * -2));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 35, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 20));
+        entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 23, Tile.TILE_HEIGHT * 25));
 
 
         entityManager.AddEntity(new Tree7(handler,Tile.TILE_WIDTH * 9, Tile.TILE_HEIGHT * 2));
@@ -192,35 +326,43 @@ public class World {
     public void update(){
         entityManager.update();
 
-        if(level == 1){
-            tempscore = entityManager.getHero().score;
-
-            if(tempscore >= 1){
-                level1complete = true;
-                if(handler.getKeyManager().play) {
-                    level1complete = false;
-                    loadLevel2();
+        if(level == 1) {
+            try {
+                if (handler.getDataBase().getEnemyKilled() == 5) {
+                    level1complete = true;
+                    if (handler.getKeyManager().play) {
+                        level1complete = false;
+                        loadLevel2();
+                    }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
         if(level == 2){
-            tempscore = entityManager.getHero().score;
-            if(tempscore >= 1){
-                level2complete = true;
-                if(handler.getKeyManager().play) {
-                    level2complete = false;
-                    loadLevel3();
+            try {
+                if (handler.getDataBase().getEnemyKilled() == 10) {
+                    level2complete = true;
+                    if (handler.getKeyManager().play) {
+                        level2complete = false;
+                        loadLevel3();
+                    }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
         if(level == 3){
-            tempscore = entityManager.getHero().score;
-            if(tempscore >= 1){
-                level3complete = true;
-                Assets.level3Music.stop();
-                State.setState(handler.getGame().winState);
+            try {
+                if (handler.getDataBase().getEnemyKilled() == 15) {
+                    level3complete = true;
+                    Assets.level3Music.stop();
+                    State.setState(handler.getGame().winState);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 

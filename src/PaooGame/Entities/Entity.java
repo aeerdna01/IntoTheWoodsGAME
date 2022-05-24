@@ -16,7 +16,7 @@ public abstract class Entity {
     protected int height;    /*!< Inaltimea imaginii entitatii.*/
     protected  int health;    /*!< Viata entitatii.*/
     public static final int DEFAULT_HEALTH=5;    /*!< Viata initiala a entitatii.*/
-    protected  boolean active = true;    /*!< Flag pentru a verifica ca entitiatea inca exista in joc.*/
+    public boolean active = true;    /*!< Flag pentru a verifica ca entitiatea inca exista in joc.*/
     protected Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
 
 
@@ -155,6 +155,7 @@ public abstract class Entity {
     /*! \fn  public boolean isEnemy()
         \brief Verifica daca entitatea din joc este inamic.
     */
+
     public boolean isEnemy()
     {
         return false;

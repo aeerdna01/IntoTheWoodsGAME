@@ -6,6 +6,7 @@ import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 
 
 public class BlueDiamond extends StaticEntity{
@@ -39,7 +40,13 @@ public class BlueDiamond extends StaticEntity{
 
         if (handler.getWorld().getEntityManager().getHero().getCollisionBounds(0, 0).intersects(ar)) {
             this.die();
-            handler.getWorld().getEntityManager().getHero().addScore(1);
+            handler.getWorld().getEntityManager().getHero().addScore(10);
+            int x = handler.getWorld().getEntityManager().getHero().getScore() + 10;
+            try{
+                handler.getDataBase().updateScore(x);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

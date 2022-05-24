@@ -9,6 +9,7 @@ import PaooGame.Handler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
  */
@@ -36,7 +37,7 @@ public class Hero extends Creature {
     ///Flag pentru a verifica daca eroul ataca inamicul
     private boolean attacking;
     ///Referinta pentru score
-    public  int score = 0;
+    public static int score = 0;
     ///Flag pentru a seta daca eroul a fost ucis
     private boolean dead = false;
 
@@ -85,14 +86,10 @@ public class Hero extends Creature {
        \param x Pozitia initiala pe axa X a eroului.
        \param y Pozitia initiala pe axa Y a eroului.
     */
-
     public static Hero getInstance(Handler handler, float x, float y){
         if(instance==null)
         {
             instance = new Hero(handler,x,y);
-        }
-        else {
-            System.out.println("Hero este singleton si este deja creat!");
         }
 
         return instance;
@@ -245,7 +242,9 @@ public class Hero extends Creature {
             g.fillRect( 20,25,250,100);
             g.setColor(Color.white);
             g.setFont(new Font("Arial", Font.BOLD, 30));
+
             g.drawString("Score: " + score, 80, 60);
+
             g.drawImage(Assets.blueDiamond,0,0,100,100,null);
 
             g.setColor(Color.white);
@@ -309,8 +308,8 @@ public class Hero extends Creature {
         return  score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public static void setScore(int score) {
+        Hero.score = score;
     }
 
     public boolean isDead(){

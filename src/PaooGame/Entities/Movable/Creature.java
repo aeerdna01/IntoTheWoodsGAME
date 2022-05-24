@@ -78,6 +78,12 @@ public abstract class Creature extends Entity {
     /*! \fn public void MoveY()
         \brief Modifica pozitia caracterului pe axa Y.
     */
+
+    @Override
+    public  boolean isActive(){
+        return active;
+    }
+
     public void moveY(){
         if(yMove<0){ /// moving up
             int ty=(int)(y+yMove+ bounds.y)/Tile.TILE_HEIGHT;

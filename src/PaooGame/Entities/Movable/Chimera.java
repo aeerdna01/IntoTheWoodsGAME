@@ -6,6 +6,7 @@ import PaooGame.Handler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 
 public class Chimera extends Creature{
 
@@ -14,7 +15,6 @@ public class Chimera extends Creature{
     private Animation animRight;
     private Animation animLeft;
 
-    private boolean dead = false;
 
     private long lastAttackTimer, attackCooldown=2000, attackTimer=attackCooldown;
 
@@ -34,7 +34,7 @@ public class Chimera extends Creature{
 
 
         speed = 0.5f;
-        this.setHealth(5);
+        this.setHealth(30);
     }
 
 
@@ -95,9 +95,24 @@ public class Chimera extends Creature{
 
 
         attackTimer=0;
-        if(handler.getWorld().getEntityManager().getHero().getCollisionBounds(0,0).intersects(ar) && handler.getWorld().getEntityManager().getHero().isActive()){
-            handler.getWorld().getEntityManager().getHero().hurt(1);
-            return;
+        if(handler.getWorld().getEntityManager().getHero().getCollisionBounds(0,0).intersects(ar) && handler.getWorld().getEntityManager().getHero().isActive()) {
+            try {
+                if (handler.getGame().getDataBase().getDifficulty() == 1) {
+                    health -= 10;
+                    handler.getWorld().getEntityManager().getHero().hurt(1);
+                }
+                if (handler.getGame().getDataBase().getDifficulty() == 2) {
+                    health -= 5;
+                    handler.getWorld().getEntityManager().getHero().hurt(1);
+                }
+                if (handler.getGame().getDataBase().getDifficulty() == 3) {
+                    health -= 3;
+                    handler.getWorld().getEntityManager().getHero().hurt(1);
+                }
+                return;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -139,6 +154,7 @@ public class Chimera extends Creature{
     }
 
 
+
     private BufferedImage getCurrentAnimationFrame() {
 
 
@@ -164,7 +180,7 @@ public class Chimera extends Creature{
         g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), 64, 10);
 
         g.setColor(Color.green);
-        g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), (64 * health) / DEFAULT_HEALTH, 10);
+        g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), (64 * health) / 30, 10);
 
         g.setColor(Color.black);
         g.drawRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), 64, 10);
@@ -177,13 +193,29 @@ public class Chimera extends Creature{
     @Override
     public void die() {
         if(health <= 0)
-            dead = true;
+        {
+            try {
+                handler.getDataBase().updateEnemyKilled(5);
+                Thread.sleep(100);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         x=this.getX();
         y=this.getY();
-        handler.getWorld().getEntityManager().getHero().score += 5;
+
+        //handler.getWorld().getEntityManager().getHero().score += 30;
+
+        handler.getWorld().getEntityManager().getHero().addScore(30);
+        int x = handler.getWorld().getEntityManager().getHero().getScore();
+        try{
+            handler.getDataBase().updateScore(x);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public boolean isChimeraDead(){
-        return dead;
-    }
 }

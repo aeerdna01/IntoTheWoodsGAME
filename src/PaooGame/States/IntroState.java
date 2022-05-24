@@ -77,7 +77,7 @@ public class IntroState extends State{
                         Hero.getInstance(handler,0,0).setX(handler.getGame().getDataBase().getHeroX());
                         Hero.getInstance(handler,0,0).setY(handler.getGame().getDataBase().getHeroY());
                         Hero.getInstance(handler,0,0).setHealth(handler.getGame().getDataBase().getHeroHealth());
-                        handler.getWorld().getEntityManager().getHero().setScore(handler.getGame().getDataBase().getScore());
+                        Hero.setScore(handler.getGame().getDataBase().getScore());
 
                         if(handler.getGame().getDataBase().getLevel() == 1)
                         {

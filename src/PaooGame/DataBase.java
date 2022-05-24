@@ -87,6 +87,26 @@ public class DataBase {
 
     }
 
+    public void updateDifficulty(int x) throws SQLException {
+        String instruction = "UPDATE SETTINGS set DIFFICULTY =" + x + " WHERE ID=1;";
+        stmt.executeUpdate(instruction);
+    }
+
+    public int getDifficulty() throws SQLException {
+        rs=stmt.executeQuery("SELECT * FROM SETTINGS;");
+        return rs.getInt("DIFFICULTY");
+    }
+
+    public void updateEnemyKilled(int x) throws SQLException {
+        String instruction = "UPDATE SAVEGAME set EnemyKilled =" + x + " WHERE ID=1;";
+        stmt.executeUpdate(instruction);
+    }
+
+    public int getEnemyKilled() throws SQLException {
+        rs=stmt.executeQuery("SELECT * FROM SAVEGAME;");
+        return rs.getInt("EnemyKilled");
+    }
+
     public int getHeroX() throws SQLException {
         rs=stmt.executeQuery("SELECT * FROM SAVEGAME;");
         return rs.getInt("HeroX");
@@ -112,28 +132,29 @@ public class DataBase {
         return rs.getInt("Level");
     }
 
+
     public void updateHeroX(int heroX) throws SQLException {
-        String instruction = "UPDATE SETTINGS set HeroX =" + heroX + " WHERE ID=1;";
+        String instruction = "UPDATE SAVEGAME set HeroX =" + heroX + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
     public void updateHeroY(int heroY) throws SQLException {
-        String instruction = "UPDATE Settings set HeroY =" + heroY + " WHERE ID=1;";
+        String instruction = "UPDATE SAVEGAME set HeroY =" + heroY + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
     public void updateHeroHealth(int heroHealth) throws SQLException {
-        String instruction = "UPDATE Settings set HeroHealth =" + heroHealth + " WHERE ID=1;";
+        String instruction = "UPDATE SAVEGAME set HeroHealth =" + heroHealth + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
     public void updateScore(int score) throws SQLException {
-        String instruction = "UPDATE Settings set Score =" + score + " WHERE ID=1;";
+        String instruction = "UPDATE SAVEGAME set Score =" + score + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 
     public void updateLevel(int level) throws SQLException {
-        String instruction = "UPDATE Settings set Level =" + level + " WHERE ID=1;";
+        String instruction = "UPDATE SAVEGAME set Level =" + level + " WHERE ID=1;";
         stmt.executeUpdate(instruction);
     }
 

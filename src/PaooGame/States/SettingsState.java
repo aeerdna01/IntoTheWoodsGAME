@@ -42,7 +42,7 @@ public class SettingsState extends State {
     */
     @Override
     public void update() {
-        System.out.println(handler.getMouseManager().getMouseX() + " " + handler.getMouseManager().getMouseY());
+        //System.out.println(handler.getMouseManager().getMouseX() + " " + handler.getMouseManager().getMouseY());
         uiManager.update();
 
         ///implementare pentru notiunea de schimbare volum muzica meniu PLUS
@@ -131,19 +131,43 @@ public class SettingsState extends State {
             }
         }
 
+        ///implementare pentru notiunea de schimbare dificulate joc PLUS
         if (handler.getMouseManager().getMouseX() >= 689 && handler.getMouseManager().getMouseX() <= 722) {
             if (handler.getMouseManager().getMouseY() >= 329 && handler.getMouseManager().getMouseY() <= 362) {
                 if (handler.getMouseManager().isLeftPressed()) {
-
+                    try {
+                        if (handler.getDataBase().getDifficulty() == 3) {
+                            handler.getDataBase().updateDifficulty(1);
+                        } else {
+                            handler.getDataBase().updateDifficulty(handler.getDataBase().getDifficulty() + 1);
+                        }
+                        Thread.sleep(100);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
         }
 
+        ///  ///implementare pentru notiunea de schimbare dificulate joc MINUS
         if (handler.getMouseManager().getMouseX() >= 741 && handler.getMouseManager().getMouseX() <= 770) {
             if (handler.getMouseManager().getMouseY() >= 330 && handler.getMouseManager().getMouseY() <= 362) {
                 if (handler.getMouseManager().isLeftPressed()) {
-
+                    try {
+                        if (handler.getDataBase().getDifficulty() == 1) {
+                            handler.getDataBase().updateDifficulty(3);
+                        } else {
+                            handler.getDataBase().updateDifficulty(handler.getDataBase().getDifficulty() - 1);
+                        }
+                        Thread.sleep(100);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -166,6 +190,7 @@ public class SettingsState extends State {
 
             g.drawString(Integer.toString(handler.getDataBase().getMenuVolume()), 590, 255);
             g.drawString(Integer.toString(handler.getDataBase().getGameVolume()), 590, 310);
+            g.drawString(Integer.toString(handler.getDataBase().getDifficulty()), 590, 365);
 
         } catch (SQLException e) {
             System.err.println("Eroare la incarcare din baza de date in SettingsState.");

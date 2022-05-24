@@ -51,7 +51,6 @@ public class Heart extends StaticEntity{
 
     @Override
     public void die() {
-
             this.active = false;
     }
 
