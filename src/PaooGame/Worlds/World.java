@@ -7,7 +7,6 @@ import PaooGame.Entities.Movable.Gorgona;
 import PaooGame.Entities.Movable.Hero;
 import PaooGame.Entities.Statics.*;
 import PaooGame.Handler;
-import PaooGame.Items.ItemManager;
 import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
 import PaooGame.Utils.Utils;
@@ -30,19 +29,31 @@ public class World {
     //entities
     private EntityManager entityManager;
 
-    //items
-    private ItemManager itemManager;
 
-    public World(Handler handler){
+    public World(Handler handler, int level){
         this.handler = handler;
-        loadLevel1();
+        if(level == 1)
+        {
+            Hero.setLevel(1);
+            loadLevel1();
+        }
+        if(level == 2)
+        {
+            Hero.setLevel(2);
+            loadLevel2();
+        }
+        if(level == 3)
+        {
+            Hero.setLevel(3);
+            loadLevel3();
+        }
     }
 
     public void loadLevel1(){
         level = 1;
+        Hero.setLevel(level);
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 15,Tile.TILE_HEIGHT * 15));
 
-        itemManager = new ItemManager(handler);
 
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
@@ -96,9 +107,8 @@ public class World {
     }
     public void loadLevel2(){
         level = 2;
+        Hero.setLevel(level);
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 15,Tile.TILE_HEIGHT * 15));
-
-        itemManager = new ItemManager(handler);
 
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
@@ -137,9 +147,8 @@ public class World {
 
     public void loadLevel3(){
         level = 3;
+        Hero.setLevel(level);
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 20,Tile.TILE_HEIGHT * 20));
-
-        itemManager = new ItemManager(handler);
 
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
@@ -160,13 +169,12 @@ public class World {
 
 
     public void update(){
-        itemManager.update();
         entityManager.update();
 
         if(level == 1){
             tempscore = entityManager.getHero().score;
 
-            if(tempscore >= 1){
+            if(tempscore >= 10){
                 level1complete = true;
                 if(handler.getKeyManager().play) {
                     level1complete = false;
@@ -220,8 +228,6 @@ public class World {
 
             }
         }
-        //items
-        itemManager.draw(g);
         //entities
         entityManager.draw(g);
     }
@@ -274,14 +280,6 @@ public class World {
 
     public void setHandler(Handler handler) {
         this.handler = handler;
-    }
-
-    public ItemManager getItemManager() {
-        return itemManager;
-    }
-
-    public void setItemManager(ItemManager itemManager) {
-        this.itemManager = itemManager;
     }
 
     public boolean isPlayerdead() {

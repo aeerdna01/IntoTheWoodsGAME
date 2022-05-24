@@ -28,9 +28,6 @@ public class KeyManager implements KeyListener {
                 justPressed[i] = true;
             }
         }
-        if(keyJustPressed(KeyEvent.VK_ESCAPE)){
-            System.out.println("ESC just pressed!");
-        }
 
         up = keys[KeyEvent.VK_W];
         down = keys[KeyEvent.VK_S];

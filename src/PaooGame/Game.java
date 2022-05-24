@@ -8,8 +8,10 @@ import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
 import PaooGame.Tiles.Tile;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 
 /*! \class Game
     \brief Clasa principala a intregului proiect. Implementeaza Game - Loop (Update -> Draw)
@@ -74,6 +76,8 @@ public class Game implements Runnable
     public State menuState;
     public State introState;
     public State helpState;
+    public State pauseState;
+    public State settingState;
    // public State gameOverState;
 
     //Input
@@ -85,6 +89,10 @@ public class Game implements Runnable
 
     //Handler
     private Handler handler;
+
+    //database
+    private final DataBase dataBase;
+
 
     /*! \fn public Game(String title, int width, int height)
         \brief Constructor de initializare al clasei Game.
@@ -103,6 +111,7 @@ public class Game implements Runnable
         this.title = title;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+        dataBase = new DataBase();
 
         /// Obiectul GameWindow este creat insa fereastra nu este construita
         /// Acest lucru va fi realizat in metoda init() prin apelul
@@ -120,8 +129,7 @@ public class Game implements Runnable
         Sunt construite elementele grafice (assets): dale, player, elemente active si pasive.
 
      */
-    private void InitGame()
-    {
+    private void InitGame() throws UnsupportedAudioFileException, IOException {
         //  wnd = new GameWindow("IntoTheWoods", 800, 600);
         /// Este construita fereastra grafica.
         wnd.getFrame().addKeyListener(keyManager);
@@ -139,10 +147,14 @@ public class Game implements Runnable
         handler= new Handler(this);
         gameCamera = new GameCamera(handler,0,0);
 
-        menuState = new MenuState(handler);
+
         helpState = new HelpState(handler);
         gameState = new GameState(handler);
         introState = new IntroState(handler);
+        pauseState = new PauseState(handler);
+        settingState = new SettingsState(handler);
+        menuState = new MenuState(handler);
+
 
         State.setState(menuState);
 
@@ -156,7 +168,13 @@ public class Game implements Runnable
     public void run()
     {
         /// Initializeaza obiectul game
-        InitGame();
+        try {
+            InitGame();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         long oldTime = System.nanoTime();   /*!< Retine timpul in nanosecunde aferent frame-ului anterior.*/
         long curentTime;                    /*!< Retine timpul curent de executie.*/
 
@@ -337,6 +355,17 @@ public class Game implements Runnable
         return introState;
     }
 
+    public State getSettingState() {
+        return settingState;
+    }
+
+    public State getPauseState() {
+        return pauseState;
+    }
+
+    public DataBase getDataBase() {
+        return dataBase;
+    }
 
 }
 

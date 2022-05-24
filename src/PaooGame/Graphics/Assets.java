@@ -1,6 +1,8 @@
 package PaooGame.Graphics;
 
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /*! \class public class Assets
     \brief Clasa incarca fiecare element grafic necesar jocului.
@@ -105,15 +107,24 @@ public class Assets {
     public static BufferedImage menu1;
     public static BufferedImage intro;
     public static BufferedImage help;
+    public static BufferedImage pause;
+    public static BufferedImage settings;
 
     public static BufferedImage gameover;
     public static BufferedImage level2unlocked;
     public static BufferedImage level3unlocked;
 
-    public static Audio MenuMusic;
-    public static Audio Level1music;
-    public static Audio Level2music;
-    public static Audio Level3music;
+
+    public static AudioInputStream menuSound;
+    public static AudioInputStream level1Sound;
+    public static AudioInputStream level2Sound;
+    public static AudioInputStream level3Sound;
+
+    public static Clip menuMusic;
+    public static Clip level1Music;
+    public static Clip level2Music;
+    public static Clip level3Music;
+
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -121,7 +132,7 @@ public class Assets {
         Aceasta functie poate fi rescrisa astfel incat elementele grafice incarcate/utilizate
         sa fie parametrizate. Din acest motiv referintele nu sunt finale.
      */
-    public static void Init() {
+    public static void Init() throws UnsupportedAudioFileException, IOException {
         /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
         SpriteSheet hero = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/cavaler_walk.png"), 64, 64);
         SpriteSheet hero_attack = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/cavaler_attack.png"), 192, 180);
@@ -131,6 +142,23 @@ public class Assets {
         SpriteSheet level1 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/level1.png"), 32, 32);
         SpriteSheet level2 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/level2.png"), 32, 32);
         SpriteSheet level3 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/level3.png"),32,32);
+
+        menuSound = AudioLoader.LoadAudio("C:/Users/Andreea/Desktop/PAOO/New folder/IntoTheWoodsGAME/IntoTheWoodsGAME/res/textures/music/menu2.wav");
+        level1Sound = AudioLoader.LoadAudio("C:\\Users\\Andreea\\Desktop\\PAOO\\New folder\\IntoTheWoodsGAME\\IntoTheWoodsGAME\\res\\textures\\music\\level1.wav");
+        level2Sound = AudioLoader.LoadAudio("C:\\Users\\Andreea\\Desktop\\PAOO\\New folder\\IntoTheWoodsGAME\\IntoTheWoodsGAME\\res\\textures\\music\\level2.wav");
+        level3Sound = AudioLoader.LoadAudio("C:\\Users\\Andreea\\Desktop\\PAOO\\New folder\\IntoTheWoodsGAME\\IntoTheWoodsGAME\\res\\textures\\music\\level3.wav");
+        try{
+            menuMusic = AudioSystem.getClip();
+            menuMusic.open(menuSound);
+            level1Music = AudioSystem.getClip();
+            level1Music.open(level1Sound);
+            level2Music = AudioSystem.getClip();
+            level2Music.open(level2Sound);
+            level3Music = AudioSystem.getClip();
+            level3Music.open(level3Sound);
+        }catch (LineUnavailableException | IOException e) {
+            System.err.println("Eroare la incarcarea sunetelor in Assets.");
+        }
 
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 
@@ -265,12 +293,9 @@ public class Assets {
         gameover = ImageLoader.LoadImage("/textures/menu/gameover.png");
         level2unlocked = ImageLoader.LoadImage("/textures/menu/level2unlocked.png");
         level3unlocked = ImageLoader.LoadImage("/textures/menu/level3unlocked.png");
+        pause = ImageLoader.LoadImage("/textures/menu/pause.png");
+        settings = ImageLoader.LoadImage("/textures/menu/settings.png");
 
-
-        MenuMusic = new Audio("res/textures/music/menu.mp3");
-        //Level1music = new Audio("/textures/music/level1.mp3");
-        //Level2music = new Audio("/textures/music/level2.mp3");
-       // Level3music = new Audio("/textures/music/level3.mp3");
     }
 
     public static boolean attackTimeElapsed() {

@@ -51,7 +51,6 @@ public class EntityManager {
             e.draw(g);
         }
 
-        hero.postRender(g);
     }
 
 

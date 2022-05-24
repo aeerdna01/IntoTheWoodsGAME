@@ -30,7 +30,7 @@ public class MenuState extends State {
     }
     @Override
     public void update() {
-        System.out.println(handler.getMouseManager().getMouseX() + " " +handler.getMouseManager().getMouseY());
+        //System.out.println(handler.getMouseManager().getMouseX() + " " +handler.getMouseManager().getMouseY());
         /*if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed())
             State.setState(handler.getGame().gameState);*/
         uiManager.update();

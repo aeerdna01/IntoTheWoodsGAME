@@ -29,7 +29,7 @@ public class HelpState extends State{
 
     @Override
     public void update() {
-        System.out.println(handler.getMouseManager().getMouseX() + " " +handler.getMouseManager().getMouseY());
+      //  System.out.println(handler.getMouseManager().getMouseX() + " " +handler.getMouseManager().getMouseY());
         uiManager.update();
     }
 

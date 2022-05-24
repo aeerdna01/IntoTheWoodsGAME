@@ -5,7 +5,7 @@ import PaooGame.Game;
 import PaooGame.Graphics.Animation;
 import PaooGame.Graphics.Assets;
 import PaooGame.Handler;
-import PaooGame.Inventory.Inventory;
+
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -35,8 +35,9 @@ public class Hero extends Creature {
 
     private static Hero instance;
 
-    //Inventory
-    private Inventory inventory;
+    protected static int level;
+
+
 
     public Hero(Handler handler, float x, float y) {
         super(handler, x, y,Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -65,7 +66,6 @@ public class Hero extends Creature {
         attackLeft = new Animation(250,Assets.hero_attack_left);
         attackRight = new Animation(250,Assets.hero_attack_right);
 
-        inventory = new Inventory(handler);
     }
 
     //Singleton
@@ -104,8 +104,6 @@ public class Hero extends Creature {
         //Attack
         checkAttacks();
 
-        //inventory
-        inventory.update();
     }
 
     private void checkAttacks() {
@@ -245,9 +243,6 @@ public class Hero extends Creature {
         }
     }
 
-    public void postRender(Graphics g){
-        inventory.draw(g);
-    }
 
     public long getAttackTimer() {
         return attackTimer;
@@ -286,6 +281,11 @@ public class Hero extends Creature {
     public int getScore(){
         return  score;
     }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public boolean isDead(){
         return  dead;
     }
@@ -300,11 +300,24 @@ public class Hero extends Creature {
     public boolean isEnemy(){
         return false;
     }
-    public Inventory getInventory() {
-        return inventory;
+
+    public static int getLevel() {
+        return level;
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
+    public static void setLevel(int level) {
+        Hero.level = level;
     }
+
+    public  float ggetX(){
+        return x;
+    }
+
+    public float ggetY(){
+        return y;
+    }
+
+
+
+
 }

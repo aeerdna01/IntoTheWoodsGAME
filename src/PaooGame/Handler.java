@@ -59,4 +59,8 @@ public class Handler {
     public void setState(State state) {
         this.state = state;
     }
+
+    public DataBase getDataBase() {
+        return game.getDataBase();
+    }
 }

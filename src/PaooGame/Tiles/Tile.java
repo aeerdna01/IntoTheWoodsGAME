@@ -14,32 +14,34 @@ public class Tile
     /// De remarcat ca urmatoarele dale sunt statice si publice. Acest lucru imi permite sa le am incarcate
     /// o singura data in memorie
 
-    public static Tile edgeTile        = new EdgeTile(0);
-    public static Tile waterTile       = new WaterTile(1);
-    public static Tile grassTile       = new GrassTile(2);
-    public static Tile woodTile        = new WoodTile(3);
-    public static Tile bush1Tile       = new Bush1Tile(4);
-    public static Tile bush2Tile       = new Bush2Tile(5);
-    public static Tile bush3Tile       = new Bush3Tile(6);
-    public static Tile rockTile        = new RockTile(7);
-    public static Tile flower1Tile     = new Flower1Tile(8);
-    public static Tile flower2Tile     = new Flower2Tile(9);
-    public static Tile mushroom1Tile   = new Mushroom1Tile(10);
-    public static Tile mushroom2Tile   = new Mushroom2Tile(11);
-    public static Tile soilPTile       = new SoilPTile(12);
-    public static Tile soilTTile       = new SoilTTile(13);
-    public static Tile lvl2grass      = new Grass2Tile(14);
-    public static Tile lvl2stone       = new Rock2Tile(15);
-    public static Tile verticalBoard   = new VBoardTile(16);
-    public static Tile horizontalBoard = new HBoardTile(17);
-    public static Tile DverticalBoard  = new DVBoardTile(18);
-    public static Tile DorizontalBoard = new DHBoardTile(19);
-    public static Tile bush4Tile       = new Bush4Tile(20);
-    public static Tile bush5Tile       = new Bush5Tile(21);
-    public static Tile wood2Tile        = new Wood2Tile(22);
-    public static Tile lvl3grass        = new Grass3Tile(23);
-    public static Tile lava             = new LavaTile(24);
-    public static Tile pavement         = new PavementTile(25);
+    private final static TileFactory factory = new TileFactory();
+
+    public static Tile edgeTile        = factory.createTile(0);
+    public static Tile waterTile       = factory.createTile(1);
+    public static Tile grassTile       = factory.createTile(2);
+    public static Tile woodTile        = factory.createTile(3);
+    public static Tile bush1Tile       = factory.createTile(4);
+    public static Tile bush2Tile       = factory.createTile(5);
+    public static Tile bush3Tile       = factory.createTile(6);
+    public static Tile rockTile        = factory.createTile(7);
+    public static Tile flower1Tile     = factory.createTile(8);
+    public static Tile flower2Tile     = factory.createTile(9);
+    public static Tile mushroom1Tile   = factory.createTile(10);
+    public static Tile mushroom2Tile   = factory.createTile(11);
+    public static Tile soilPTile       = factory.createTile(12);
+    public static Tile soilTTile       = factory.createTile(13);
+    public static Tile lvl2grass      = factory.createTile(14);
+    public static Tile lvl2stone       =factory.createTile(15);
+    public static Tile verticalBoard   =factory.createTile(16);
+    public static Tile horizontalBoard =factory.createTile(17);
+    public static Tile DverticalBoard  = factory.createTile(18);
+    public static Tile DorizontalBoard = factory.createTile(19);
+    public static Tile bush4Tile       = factory.createTile(20);
+    public static Tile bush5Tile       = factory.createTile(21);
+    public static Tile wood2Tile        = factory.createTile(22);
+    public static Tile lvl3grass        = factory.createTile(23);
+    public static Tile lava             = factory.createTile(24);
+    public static Tile pavement         =factory.createTile(25);
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/
