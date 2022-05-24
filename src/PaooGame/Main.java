@@ -1,7 +1,9 @@
 package PaooGame;
 
 import PaooGame.GameWindow.GameWindow;
-
+/*! \class Main
+    \brief Where the game starts.
+ */
 public class Main
 {
     public static void main(String[] args)

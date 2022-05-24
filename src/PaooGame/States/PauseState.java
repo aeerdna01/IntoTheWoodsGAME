@@ -8,9 +8,17 @@ import PaooGame.Entities.EntityManager;
 import java.awt.*;
 import java.sql.SQLException;
 
+/*! \class public class PauseState extends State
+    \brief Implementeaza notiunea de pauza in joc cu urmatoarele optiuni: resume, save, quit.
+ */
 public class PauseState extends State {
 
+    /*! \fn public PauseState(Handler handler)
+         \brief Constructorul de initializare al clasei.
+         \param handler O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
+    */
     public PauseState(Handler handler) {
+        ///Apel al constructorului clasei de baza
         super(handler);
         AudioLoader.setVolume(Assets.menuMusic,100);
         if (!Assets.menuMusic.isRunning()) { // daca Clipul audio nu este deja pornit
@@ -19,10 +27,13 @@ public class PauseState extends State {
         }
     }
 
+    /*! \fn public void Update()
+        \brief Actualizeaza starea curenta.
+    */
     @Override
     public void update() {
-       //ystem.out.println(handler.getMouseManager().getMouseX() + " " +handler.getMouseManager().getMouseY());
-        //resume
+
+        ///implementare pentru notiunea de Resume
         if(handler.getMouseManager().getMouseX() >= 335  && handler.getMouseManager().getMouseX() <= 530){
             if(handler.getMouseManager().getMouseY() >= 167 && handler.getMouseManager().getMouseY() <= 236) {
                 if(handler.getMouseManager().isLeftPressed())
@@ -33,7 +44,7 @@ public class PauseState extends State {
             }
         }
 
-        //save
+        ///implementare pentru notiunea de Save
         if(handler.getMouseManager().getMouseX() >= 342  && handler.getMouseManager().getMouseX() <= 524){
             if(handler.getMouseManager().getMouseY() >= 269 && handler.getMouseManager().getMouseY() <= 320) {
                 if(handler.getMouseManager().isLeftPressed())
@@ -57,7 +68,7 @@ public class PauseState extends State {
             }
         }
 
-        //quit
+        ///implementare pentru notiunea de Quit
         if(handler.getMouseManager().getMouseX() >= 344  && handler.getMouseManager().getMouseX() <= 526){
             if(handler.getMouseManager().getMouseY() >= 357 && handler.getMouseManager().getMouseY() <= 407) {
                 if(handler.getMouseManager().isLeftPressed())
@@ -69,6 +80,11 @@ public class PauseState extends State {
 
     }
 
+
+    /*! \fn public void draw(Graphics g)
+        \brief Deseneaza (randeaza) pe ecran starea curenta a meniului.
+        \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
+    */
     @Override
     public void draw(Graphics g) {
         g.drawImage(Assets.pause, 0, 0, handler.getWidth(), handler.getHeight(), null);

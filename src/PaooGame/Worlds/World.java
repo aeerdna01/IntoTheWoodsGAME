@@ -16,6 +16,11 @@ import PaooGame.Utils.Utils;
 
 import java.awt.*;
 
+
+/*! \class public class World
+    \brief Implementeaza notiunea de harta a jocului.
+ */
+
 public class World {
     private Handler handler;
     private int width, height;
@@ -30,9 +35,7 @@ public class World {
     private boolean level2complete = false;
     private boolean level3complete = false;
 
-    //entities
     private EntityManager entityManager;
-
 
     public World(Handler handler, int level){
         this.handler = handler;
@@ -143,7 +146,6 @@ public class World {
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 3, Tile.TILE_HEIGHT * 5));
         entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 12));
 
-
         loadWorld("res/worlds/world2.txt");
 
         entityManager.getHero().setX(spawnX);
@@ -179,7 +181,6 @@ public class World {
         entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 13));
         entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 5));
         entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 23));
-
 
         loadWorld("res/worlds/world3.txt");
 
@@ -224,7 +225,6 @@ public class World {
         }
 
 
-
         if(entityManager.getHero().isDead()){
             playerdead = true;
             if (handler.getKeyManager().quit) {
@@ -259,7 +259,7 @@ public class World {
 
             }
         }
-        //entities
+
         entityManager.draw(g);
     }
     public Tile getTile(int x, int y) {
@@ -277,27 +277,29 @@ public class World {
         }
         return t;
     }
-    private void loadWorld(String path) {
 
+    private void loadWorld(String path) {
         try {
             String file = Utils.loadFileAsString(path);
+            if(file.length() != 0)
+            {
             String[] tokens = file.split("\\s+");
             width = Utils.parseInt(tokens[0]);
             height = Utils.parseInt(tokens[1]);
             spawnX = Utils.parseInt(tokens[2]);
             spawnY = Utils.parseInt(tokens[3]);
 
-            int cnt = 0;
             tiles = new int[width][height];
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
-                    if(tiles[x][y] == 0)
-                        cnt++;
                 }
             }
-            if(cnt == width * height)
+            }
+            else
+            {
                 throw new EmptyWorldFileException();
+            }
         } catch (EmptyWorldFileException e) {
             System.out.println(e.getMessage());
         }
@@ -349,6 +351,10 @@ public class World {
 
     public boolean isLevel2complete() {
         return level2complete;
+    }
+
+    public boolean isLevel3complete() {
+        return level3complete;
     }
 
 

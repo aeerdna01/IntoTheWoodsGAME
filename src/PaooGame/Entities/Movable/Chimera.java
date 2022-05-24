@@ -16,11 +16,7 @@ public class Chimera extends Creature{
 
     private boolean dead = false;
 
-
-
     private long lastAttackTimer, attackCooldown=2000, attackTimer=attackCooldown;
-
-
 
     public Chimera(Handler handler, float x, float y) {
         super(handler, x, y, 80,80);

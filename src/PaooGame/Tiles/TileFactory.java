@@ -1,7 +1,14 @@
 package PaooGame.Tiles;
 
+
+/*! \class TileFactory
+    \brief Implementarea sablonului de proiectare de tip Metoda Fabrica.
+ */
 public class TileFactory {
 
+    /*! \fn public Tile createTile(TileTypes tileType, int id)
+       \brief Returneaza un obiect de tip dala cu id-ul corespunzator.
+   */
     public Tile createTile(int id){
         switch(id){
             case 0: return new EdgeTile(id);

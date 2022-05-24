@@ -6,6 +6,10 @@ import PaooGame.UI.UIObject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/*! \class UIImageButton
+    \brief Gestioneaza partea de interfata a jocului, extinde notiunea de obiect grafic > butoane.
+
+ */
 public class UIImageButton extends UIObject {
 
     private BufferedImage[] images;

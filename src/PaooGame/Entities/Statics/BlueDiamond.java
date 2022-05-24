@@ -7,6 +7,7 @@ import PaooGame.Tiles.Tile;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+
 public class BlueDiamond extends StaticEntity{
 
     private BufferedImage image;

@@ -8,12 +8,19 @@ import PaooGame.Utils.UIImageButton;
 
 import java.awt.*;
 import java.sql.SQLException;
-
+/*! \class public class WinState extends State
+    \brief Implementeaza notiunea de joc castigat cu posibilitate de intoarcere in meniu.
+ */
 public class WinState extends State{
 
     private UIManager uiManager;
 
+    /*! \fn public WinState(Handler handler)
+        \brief Constructorul de initializare al clasei.
+        \param handler O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
+    */
     public WinState(Handler handler) {
+        ///Apel al constructorului clasei de baza
         super(handler);
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUiManager(uiManager);
@@ -28,6 +35,9 @@ public class WinState extends State{
 
     }
 
+    /*! \fn public void Update()
+       \brief Actualizeaza starea curenta.
+    */
     @Override
     public void update() {
          System.out.println(handler.getMouseManager().getMouseX() + " " +handler.getMouseManager().getMouseY());
@@ -35,6 +45,10 @@ public class WinState extends State{
         uiManager.update();
     }
 
+    /*! \fn public void draw(Graphics g)
+        \brief Deseneaza (randeaza) pe ecran starea curenta a meniului.
+        \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
+    */
     @Override
     public void draw(Graphics g) {
         g.drawImage(Assets.win,0,0,handler.getWidth(), handler.getHeight(), null);

@@ -10,13 +10,19 @@ import PaooGame.Utils.UIImageButton;
 
 import java.awt.*;
 import java.sql.SQLException;
-
+/*! \class public class SettingsState extends State
+    \brief Implementeaza notiunea de setari in joc.
+ */
 public class SettingsState extends State {
 
     private UIManager uiManager;
 
+    /*! \fn public SettingsState(Handler handler)
+        \brief Constructorul de initializare al clasei.
+        \param handler O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
+   */
     public SettingsState(Handler handler) {
-
+        ///Apel al constructorului clasei de baza
         super(handler);
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUiManager(uiManager);
@@ -31,11 +37,15 @@ public class SettingsState extends State {
 
     }
 
+    /*! \fn public void Update()
+        \brief Actualizeaza starea curenta.
+    */
     @Override
     public void update() {
         System.out.println(handler.getMouseManager().getMouseX() + " " + handler.getMouseManager().getMouseY());
         uiManager.update();
 
+        ///implementare pentru notiunea de schimbare volum muzica meniu PLUS
         if (handler.getMouseManager().getMouseX() >= 692 && handler.getMouseManager().getMouseX() <= 722) {
             if (handler.getMouseManager().getMouseY() >= 223 && handler.getMouseManager().getMouseY() <= 254) {
                 if (handler.getMouseManager().isLeftPressed()) {
@@ -56,6 +66,7 @@ public class SettingsState extends State {
             }
         }
 
+        ///implementare pentru notiunea de schimbare volum muzica meniu MINUS
         if (handler.getMouseManager().getMouseX() >= 739 && handler.getMouseManager().getMouseX() <= 768) {
             if (handler.getMouseManager().getMouseY() >= 224 && handler.getMouseManager().getMouseY() <= 254) {
                 if (handler.getMouseManager().isLeftPressed()) {
@@ -76,7 +87,7 @@ public class SettingsState extends State {
             }
         }
 
-
+        ///implementare pentru notiunea de schimbare volum muzica levels PLUS
         if (handler.getMouseManager().getMouseX() >= 692 && handler.getMouseManager().getMouseX() <= 719) {
             if (handler.getMouseManager().getMouseY() >= 278 && handler.getMouseManager().getMouseY() <= 310) {
                 if (handler.getMouseManager().isLeftPressed()) {
@@ -97,6 +108,7 @@ public class SettingsState extends State {
             }
         }
 
+        ///implementare pentru notiunea de schimbare volum muzica levels MINUS
         if (handler.getMouseManager().getMouseX() >= 742 && handler.getMouseManager().getMouseX() <= 769) {
             if (handler.getMouseManager().getMouseY() >= 279 && handler.getMouseManager().getMouseY() <= 305) {
                 if (handler.getMouseManager().isLeftPressed()) {
@@ -137,10 +149,11 @@ public class SettingsState extends State {
         }
 
     }
-        //temporary to go directly to the game state
-        /*handler.getMouseManager().setUiManager(null);
-        State.setState(handler.getGame().gameState);*/
 
+    /*! \fn public void draw(Graphics g)
+        \brief Deseneaza (randeaza) pe ecran starea curenta a meniului.
+        \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
+    */
     @Override
     public void draw(Graphics g) {
         g.drawImage(Assets.settings,0,0,handler.getWidth(), handler.getHeight(), null);
@@ -155,7 +168,7 @@ public class SettingsState extends State {
             g.drawString(Integer.toString(handler.getDataBase().getGameVolume()), 590, 310);
 
         } catch (SQLException e) {
-            System.err.println("Eroare la incarcare din baza de date in SettingsState->Draw.");
+            System.err.println("Eroare la incarcare din baza de date in SettingsState.");
         }
 
     }

@@ -9,52 +9,63 @@ import PaooGame.Handler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+/*! \class public class Hero extends Character
+    \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
+ */
 
 public class Hero extends Creature {
 
-    //Animations
+    ///Referinte catre animatiile pentru mers
     private Animation animDown;
     private Animation animUp;
     private Animation animRight;
     private Animation animLeft;
     private Animation lastAnim;
 
+    //Referinte catre animatiile pentru atac
     private Animation attackDown;
     private Animation attackUp;
     private Animation attackRight;
     private Animation attackLeft;
 
-    //Attack timer
+    ///Attack timer
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
 
+    ///Referinta pentru a gestiona directia animatiilor
     private int direction = 0;
+    ///Flag pentru a verifica daca eroul ataca inamicul
     private boolean attacking;
-
+    ///Referinta pentru score
     public  int score = 0;
+    ///Flag pentru a seta daca eroul a fost ucis
     private boolean dead = false;
 
-    private static Hero instance;
-
+    ///Referinta pentru nivelul in care se afla eroul
     protected static int level;
 
+    ///Singleton
+    private static Hero instance = null;
 
-
+     /*! \fn public Hero(Handler handler, float x, float y)
+        \brief Constructorul de initializare al clasei Hero.
+        \param handler Referinta catre obiectul shortcut (obiect ce retine o serie de referinte din program).
+        \param x Pozitia initiala pe axa X a eroului.
+        \param y Pozitia initiala pe axa Y a eroului.
+     */
     public Hero(Handler handler, float x, float y) {
+        ///Apel al constructorului clasei de baza
         super(handler, x, y,Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
-        bounds.x=22;
-        bounds.y=44; //44
-        bounds.width=19; //19
-        bounds.height=19; //19
 
+        ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita
+        bounds.x=22;
+        bounds.y=44;
+        bounds.width=19;
+        bounds.height=19;
+
+        ///seteaza viata eroului implicit cu 5
         this.setHealth(5);
 
-/*
-        attackBounds.x = 26;
-        attackBounds.y = 20;
-        attackBounds.width = 54;
-        attackBounds.height = 32;
- */
-        //Animations
+        ///initilizeaza animatiile
         animDown = new Animation(250,Assets.hero_walk_down);
         animUp = new Animation(250,Assets.hero_walk_up);
         animLeft = new Animation(250,Assets.hero_walk_left);
@@ -68,44 +79,63 @@ public class Hero extends Creature {
 
     }
 
-    //Singleton
+    /*! \fn public static Hero getInstance(Handler handler, float x, float y)
+       \brief Metoda de creare a unui obiect de tip Hero.
+       \param handler Referinta catre obiectul shortcut (obiect ce retine o serie de referinte din program).
+       \param x Pozitia initiala pe axa X a eroului.
+       \param y Pozitia initiala pe axa Y a eroului.
+    */
+
     public static Hero getInstance(Handler handler, float x, float y){
         if(instance==null)
         {
             instance = new Hero(handler,x,y);
         }
+        else {
+            System.out.println("Hero este singleton si este deja creat!");
+        }
+
         return instance;
     }
 
 
-
+    /*! \fn public void update()
+           \brief Actualizeaza pozitia si imaginea eroului.
+    */
     @Override
     public void update() {
+        ///daca eroul nu a fost ucis se actualizeaza animatiile
         if(!isDead()) {
-            //Animations
+            ///Animatiile pentru mers
             animDown.update();
             animUp.update();
             animLeft.update();
             animRight.update();
             lastAnim.update();
         }
-
-
+        ///animatiile pentru atac
         attackDown.update();
         attackUp.update();
         attackLeft.update();
         attackRight.update();
 
-        //Movement
+        ///verifica daca a fost apasata o tasta
         getInput();
+
+        ///actualizeaza pozitia
         move();
+
+        ///centreaza camera implementata in joc pe erou
         handler.getGameCamera().centerOnEntity(this);
 
-        //Attack
+        ///verifica daca a avut loc notiunea de atac
         checkAttacks();
 
     }
 
+    /*! \fn     private void checkAttacks()
+          \brief Verifica daca eroul a initiat un atac asupra inamicului.
+   */
     private void checkAttacks() {
 
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
@@ -151,8 +181,7 @@ public class Hero extends Creature {
 
     @Override
     public void die(){
-        System.out.println("YOU LOSE!");
-
+        System.out.println("YOU DIED!");
     }
 
     @Override
@@ -165,6 +194,9 @@ public class Hero extends Creature {
         }
     }
 
+    /*! \fn private void getInput()
+            \brief Verifica daca a fost apasata o tasta din cele stabilite pentru controlul eroului.
+    */
     private void getInput()
     {
         xMove = 0;
@@ -191,6 +223,11 @@ public class Hero extends Creature {
         }
 
     }
+
+    /*! \fn public void draw(Graphics g)
+        \brief Randeaza/deseneaza eroul in noua pozitie.
+        \brief g Contextul grafi in care trebuie efectuata desenarea eroului.
+     */
     @Override
     public void draw(Graphics g) {
 
@@ -238,41 +275,31 @@ public class Hero extends Creature {
                 g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
             }
             // g.setColor(Color.red);
-            //  g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
+            // g.fillRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()),(int)(y+bounds.y-handler.getGameCamera().getyOffset()),bounds.width, bounds.height);
 
         }
     }
 
-
-    public long getAttackTimer() {
-        return attackTimer;
-    }
-
-    public long getLastAttackTimer() {
-        return lastAttackTimer;
-    }
-
-    public long getAttackCooldown() {
-        return attackCooldown;
-    }
-
+    /*! \fn  private BufferedImage getCurrentAnimationFrame()
+         \brief Returneaza animatia curenta in functie de directia in care se deplaseaza eroul.
+    */
     private BufferedImage getCurrentAnimationFrame() {
 
 
         if(xMove < 0){
-            //left
+            ///left
             direction = 2;
             return animLeft.getCurrentFrame();
         }else if(xMove > 0){
-            //right
+            ///right
             direction = 3;
             return animRight.getCurrentFrame();
         }else if(yMove < 0){
-            //up
+            ///up
             direction = 1;
             return animUp.getCurrentFrame();
         }else{
-            //down
+            ///down
             direction = 0;
             return animDown.getCurrentFrame();
         }
@@ -293,9 +320,11 @@ public class Hero extends Creature {
     public void addHealth(int x){
         health = health + x;
     }
+
     public void addScore(int x){
         score = score + x;
     }
+
     @Override
     public boolean isEnemy(){
         return false;
@@ -308,16 +337,6 @@ public class Hero extends Creature {
     public static void setLevel(int level) {
         Hero.level = level;
     }
-
-    public  float ggetX(){
-        return x;
-    }
-
-    public float ggetY(){
-        return y;
-    }
-
-
 
 
 }

@@ -2,6 +2,10 @@ package PaooGame.UI;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+/*! \class abstract UIObjects
+    \brief Gestioneaza partea de interfata a jocului.
+
+ */
 
 public abstract class UIObject {
 

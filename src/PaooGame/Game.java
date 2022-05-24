@@ -49,12 +49,14 @@ import java.io.IOException;
 public class Game implements Runnable
 {
     private GameWindow      wnd;        /*!< Fereastra in care se va desena tabla jocului*/
-    private int width, height;
-    public String title;
+
+    private int width, height; /*!< Referinta catre latimea si inaltimea ferestrei jocului. */
+    public String title; /*!< Referinta catre titlul jocului. */
 
     private boolean         runState;   /*!< Flag ce starea firului de executie.*/
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
+
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
     /// Modul in care va fi implementata aceasta strategie in cadrul proiectului curent va fi triplu buffer-at
@@ -71,28 +73,27 @@ public class Game implements Runnable
 
     private Tile tile; /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
 
-    //States
-    public State gameState;
-    public State menuState;
-    public State introState;
-    public State helpState;
-    public State pauseState;
-    public State settingState;
-    public State winState;
-   // public State gameOverState;
+    //Avaiable States
+    public State gameState; /*!< Referinta catre joc. */
+    public State menuState; /*!< Referinta catre pagina de start a jocului. */
+    public State introState; /*!< Referinta catre meniu. */
+    public State helpState; /*!< Referinta catre sectiunea help. */
+    public State pauseState; /*!< Referinta catre seciunea pauza. */
+    public State settingState; /*!< Referinta catre setari.  */
+    public State winState; /*!< Referinta catre sectiunea de joc castigat. */
 
     //Input
-    private KeyManager keyManager;
-    private MouseManager mouseManager;
+    private KeyManager keyManager;  /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
+    private MouseManager mouseManager;  /*!< Referinta catre obiectul care gestioneaza miscarile mouse-ului.*/
 
-    //Camera
-    private GameCamera gameCamera;
+    //Camera game
+    private GameCamera gameCamera; /*!< Referinta catre obiectul care misca camera in functie de miscarile caracterului.*/
 
     //Handler
-    private Handler handler;
+    private Handler handler;   /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
 
-    //database
-    private final DataBase dataBase;
+    //Database
+    private final DataBase dataBase;/*!< Referinta catre baza de date a jocului.*/
 
 
     /*! \fn public Game(String title, int width, int height)
@@ -110,8 +111,12 @@ public class Game implements Runnable
         this.width = width;
         this.height = height;
         this.title = title;
+
+        ///Construirea obiectului de gestiune a evenimentelor de tastatura si mouse
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+
+        ///Construirea bazei de date a jocului
         dataBase = new DataBase();
 
         /// Obiectul GameWindow este creat insa fereastra nu este construita
@@ -131,23 +136,27 @@ public class Game implements Runnable
 
      */
     private void InitGame() throws UnsupportedAudioFileException, IOException {
-        //  wnd = new GameWindow("IntoTheWoods", 800, 600);
-        /// Este construita fereastra grafica.
+
+        ///Sa ataseaza ferestrei managerul de tastatura si mouse pentru a primi evenimentele furnizate de fereastra.
         wnd.getFrame().addKeyListener(keyManager);
         wnd.getFrame().addMouseListener(mouseManager);
         wnd.getFrame().addMouseMotionListener(mouseManager);
         wnd.GetCanvas().addMouseListener(mouseManager);
         wnd.GetCanvas().addMouseMotionListener(mouseManager);
 
+        /// Este construita fereastra grafica.
         wnd.BuildGameWindow();
 
         /// Se incarca toate elementele grafice (dale)
         Assets.Init();
 
-
+        ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
         handler= new Handler(this);
+
+        ///Se construieste camera jocului
         gameCamera = new GameCamera(handler,0,0);
 
+        ///Se definesc starile jocului
         winState = new WinState(handler);
         helpState = new HelpState(handler);
         gameState = new GameState(handler);
@@ -156,7 +165,7 @@ public class Game implements Runnable
         settingState = new SettingsState(handler);
         menuState = new MenuState(handler);
 
-
+        ///Seteaza stare implicita cu care va fi lansat programul in executie
         State.setState(menuState);
 
     }
@@ -203,33 +212,12 @@ public class Game implements Runnable
 
     }
 
-    //getters
-
-    public KeyManager getKeyManager(){
-        return keyManager;
-    }
-
-    public MouseManager getMouseManager() {
-        return mouseManager;
-    }
-
-    public GameCamera getGameCamera(){
-        return gameCamera;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 
     /*! \fn public synchronized void start()
                 \brief Creaza si starteaza firul separat de executie (thread).
 
                 Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
-             */
+    */
     public synchronized void StartGame()
     {
         if(runState == false)
@@ -288,10 +276,18 @@ public class Game implements Runnable
 
     private void Update()
     {
-        keyManager.update();
-        if(State.getState()!=null){
-            State.getState().update();
-            wnd.getFrame().requestFocusInWindow();
+        try {
+            ///se determina starea tastelor
+            keyManager.update();
+            ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, trebuie sa fie diferita de null.
+            if (State.getState() != null) {
+                ///Actualizeaza starea curenta a jocului daca exista.
+                State.getState().update();
+                wnd.getFrame().requestFocusInWindow();
+            }
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
 
     }
@@ -305,6 +301,7 @@ public class Game implements Runnable
     {
         /// Returnez bufferStrategy pentru canvasul existent
         bs = wnd.GetCanvas().getBufferStrategy();
+
         /// Verific daca buffer strategy a fost construit sau nu
         if(bs == null)
         {
@@ -330,11 +327,13 @@ public class Game implements Runnable
 
         /// operatie de desenare
 
-
+        ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, trebuie sa fie diferita de null.
         if(State.getState()!=null){
+            ///Actualizeaza starea curenta a jocului daca exista.
             State.getState().draw(g);
         }
 
+        /// end operatie de desenare
 
         /// Se afiseaza pe ecran
         bs.show();
@@ -344,30 +343,95 @@ public class Game implements Runnable
         g.dispose();
     }
 
+    ///GETTERS
+
+    /*! \fn public KeyManager GetKeyManager()
+      \brief Returneaza obiectul care gestioneaza tastatura.
+   */
+    public KeyManager getKeyManager(){
+        return keyManager;
+    }
+
+    /*! \fn public KeyManager GetKeyManager()
+   \brief Returneaza obiectul care gestioneaza mouse-ul.
+    */
+    public MouseManager getMouseManager() {
+        return mouseManager;
+    }
+
+
+    /*! \fn public GameCamera GetCameraGame()
+     \brief Returneaza camera care se centreaza pe caracter.
+    */
+    public GameCamera getGameCamera(){
+        return gameCamera;
+    }
+
+    /*! \fn public int GetWidth()
+       \brief Returneaza latimea ferestrei
+    */
+    public int getWidth() {
+        return width;
+    }
+
+    /*! \fn public int GetHeight()
+          \brief Returneaza inaltimea ferestrei
+       */
+    public int getHeight() {
+        return height;
+    }
+
+    /*! \fn public static State getPlayState()
+     \brief Returneaza state-ul de play.
+ */
     public State getGameState() {
         return gameState;
     }
 
+
+    /*! \fn public static State getMenuState()
+    \brief Returneaza state-ul de menu.
+    */
     public State getMenuState() {
         return menuState;
     }
 
-    public State getMenu2State() {
+
+    /*! \fn public static State getMenuState()
+    \brief Returneaza state-ul de intro.
+    */
+    public State getIntroState() {
         return introState;
     }
 
+
+    /*! \fn public static State getMenuState()
+    \brief Returneaza state-ul de settings.
+    */
     public State getSettingState() {
         return settingState;
     }
 
+
+    /*! \fn public static State getMenuState()
+    \brief Returneaza state-ul de winner.
+    */
     public State getWinState() {
         return winState;
     }
 
+
+    /*! \fn public static State getMenuState()
+    \brief Returneaza state-ul de pause.
+    */
     public State getPauseState() {
         return pauseState;
     }
 
+
+    /*! \fn public static State getMenuState()
+    \brief Returneaza baza de date a jocului.
+    */
     public DataBase getDataBase() {
         return dataBase;
     }

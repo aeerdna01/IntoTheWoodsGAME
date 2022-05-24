@@ -3,7 +3,9 @@ package PaooGame.Utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+/*! \class Utils
+    \brief Contine functii care gestioneaza partea de incarcare a fisierului txt folosit la crearea hartii jocului.
+ */
 public class Utils {
 
     public static String loadFileAsString(String path){

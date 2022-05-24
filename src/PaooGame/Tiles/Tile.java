@@ -95,7 +95,6 @@ public class Tile
     /*! \fn public int GetId()
         \brief Returneaza id-ul dalei.
      */
-
     public int GetId()
     {
         return id;

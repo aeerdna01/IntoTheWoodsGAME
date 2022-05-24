@@ -6,6 +6,10 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/*! \class UIManager
+    \brief Gestioneaza obiectele de tip butoane instantiate folosite la interfata jocului.
+
+ */
 public class UIManager {
 
     private Handler handler;

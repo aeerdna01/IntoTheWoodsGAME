@@ -5,17 +5,33 @@ import PaooGame.Game;
 import PaooGame.Handler;
 import PaooGame.Tiles.Tile;
 
+
+/*! \class GameCamera
+    \brief Clasa cu rolul de a centra GameWindows-ul pe caracter atunci cand acesta isi schimba pozitia.
+ */
 public class GameCamera {
 
-    private float xOffset, yOffset;
-    private Handler handler;
+    private float xOffset;     /*!< Referinta catre coordonata x.*/
+    private float yOffset;     /*!< Referinta catre coordonata y.*/
+    private Handler handler;   /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
 
+
+    /*! \fn public GameCamera(Handler handler,float xOffset, float yOffset)
+      \brief Pozitioneaza camera cu eroul in mijloc
+      \param xOffset pozitia initiala a camerei pe axa Ox.
+      \param yOffset pozitia initiala a camerei pe axa Oy.
+      \param handler incarca referintele.
+   */
     public GameCamera(Handler handler,float xOffset, float yOffset){
         this.handler=handler;
         this.xOffset=xOffset;
         this.yOffset=yOffset;
     }
 
+    
+    /*! \fn public void checkBlankSpace()
+      \brief Verifica sa nu arate colturile albe cand caracterul se afla intr-o pozitie in care acesta nu se poate afla in mijlocul ecranului.
+  */
     public void checkBlankSpace(){
         if(xOffset < 0){
             xOffset=0;
@@ -32,6 +48,10 @@ public class GameCamera {
     }
 
 
+    /*! \fn public void centerOnEntity(Entity e)
+      \brief Actualizeaza camera cand caracterul isi schimba pozitia
+      \param e caracterul pe care se va centra camera.
+  */
     public void centerOnEntity(Entity e){
         xOffset=e.getX()-handler.getWidth()/2 + e.getWidth()/2;
         yOffset=e.getY()-handler.getHeight()/2+ e.getHeight()/2;
@@ -42,19 +62,22 @@ public class GameCamera {
         yOffset+=yAmt;
         checkBlankSpace();
     }
+
+    ///Getters
+
+    /*! \fn public float getxOffset()
+     \brief Returneaza pozitia camerei pe axa Ox.
+  */
     public float getxOffset() {
         return xOffset;
     }
 
-    public void setxOffset(float xOffset) {
-        this.xOffset = xOffset;
-    }
-
+    /*! \fn public float getyOffset()
+       \brief Returneaza pozitia camerei pe axa Oy.
+    */
     public float getyOffset() {
         return yOffset;
     }
 
-    public void setyOffset(float yOffset) {
-        this.yOffset = yOffset;
-    }
+
 }

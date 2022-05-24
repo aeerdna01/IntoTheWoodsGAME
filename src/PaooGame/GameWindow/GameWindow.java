@@ -121,6 +121,9 @@ public class GameWindow
         return canvas;
     }
 
+    /*! \fn public int GetFrame()
+      \brief Returneaza referinta catre frame-ul jocului.
+   */
     public JFrame getFrame(){ return wndFrame;}
 
 }
