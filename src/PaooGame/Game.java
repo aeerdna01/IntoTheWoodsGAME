@@ -78,6 +78,7 @@ public class Game implements Runnable
     public State helpState;
     public State pauseState;
     public State settingState;
+    public State winState;
    // public State gameOverState;
 
     //Input
@@ -147,7 +148,7 @@ public class Game implements Runnable
         handler= new Handler(this);
         gameCamera = new GameCamera(handler,0,0);
 
-
+        winState = new WinState(handler);
         helpState = new HelpState(handler);
         gameState = new GameState(handler);
         introState = new IntroState(handler);
@@ -357,6 +358,10 @@ public class Game implements Runnable
 
     public State getSettingState() {
         return settingState;
+    }
+
+    public State getWinState() {
+        return winState;
     }
 
     public State getPauseState() {

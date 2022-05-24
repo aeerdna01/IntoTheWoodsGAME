@@ -2,6 +2,6 @@ package PaooGame.Exceptions;
 
 public class EmptyWorldFileException extends Exception{
     public EmptyWorldFileException(){
-        super("Empty world file!");
+        super("Exception! Empty world file!");
     }
 }

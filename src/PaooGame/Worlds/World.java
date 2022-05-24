@@ -6,6 +6,9 @@ import PaooGame.Entities.Movable.Chimera;
 import PaooGame.Entities.Movable.Gorgona;
 import PaooGame.Entities.Movable.Hero;
 import PaooGame.Entities.Statics.*;
+import PaooGame.Exceptions.EmptyWorldFileException;
+import PaooGame.Exceptions.UnknownTileException;
+import PaooGame.Graphics.Assets;
 import PaooGame.Handler;
 import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
@@ -25,6 +28,7 @@ public class World {
 
     private boolean level1complete = false;
     private boolean level2complete = false;
+    private boolean level3complete = false;
 
     //entities
     private EntityManager entityManager;
@@ -100,6 +104,7 @@ public class World {
         entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 31, Tile.TILE_HEIGHT * 20));
         entityManager.AddEntity(new Tree4(handler,Tile.TILE_WIDTH * 23, Tile.TILE_HEIGHT * 25));
 
+        //loadWorld("res/worlds/empty_world.txt");
         loadWorld("res/worlds/world1.txt");
 
         entityManager.getHero().setX(spawnX);
@@ -150,15 +155,30 @@ public class World {
         Hero.setLevel(level);
         entityManager = new EntityManager(handler, new Hero(handler, Tile.TILE_WIDTH * 20,Tile.TILE_HEIGHT * 20));
 
-        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
-        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
-        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 13));
-        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 5));
-        entityManager.AddEntity(new BlueDiamond(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 23));
 
         entityManager.AddEntity(new Achlys(handler,Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 20));
 
         entityManager.AddEntity(new Castle(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 8));
+
+        entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 15));
+        entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 15));
+        entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 15));
+        entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 1, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Wall(handler,Tile.TILE_WIDTH * 4, Tile.TILE_HEIGHT * 5));
+
+
+        entityManager.AddEntity(new Tree7(handler,Tile.TILE_WIDTH * 9, Tile.TILE_HEIGHT * 2));
+        entityManager.AddEntity(new Tree7(handler,Tile.TILE_WIDTH * 11, Tile.TILE_HEIGHT * 8));
+        entityManager.AddEntity(new Tree7(handler,Tile.TILE_WIDTH * 19 , Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Tree7(handler,Tile.TILE_WIDTH * 24, Tile.TILE_HEIGHT * 10));
+        entityManager.AddEntity(new Tree7(handler,Tile.TILE_WIDTH * 19, Tile.TILE_HEIGHT * 17));
+        entityManager.AddEntity(new Tree7(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 20));
+
+        entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 22, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 5, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 13));
+        entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 5));
+        entityManager.AddEntity(new Fire(handler,Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 23));
 
 
         loadWorld("res/worlds/world3.txt");
@@ -174,7 +194,7 @@ public class World {
         if(level == 1){
             tempscore = entityManager.getHero().score;
 
-            if(tempscore >= 10){
+            if(tempscore >= 1){
                 level1complete = true;
                 if(handler.getKeyManager().play) {
                     level1complete = false;
@@ -193,6 +213,17 @@ public class World {
                 }
             }
         }
+
+        if(level == 3){
+            tempscore = entityManager.getHero().score;
+            if(tempscore >= 1){
+                level3complete = true;
+                Assets.level3Music.stop();
+                State.setState(handler.getGame().winState);
+            }
+        }
+
+
 
         if(entityManager.getHero().isDead()){
             playerdead = true;
@@ -231,30 +262,44 @@ public class World {
         //entities
         entityManager.draw(g);
     }
-    public Tile getTile(int x, int y){
-
-        if(x<0||y<0 || x>= width || y>=height)
-            return  Tile.grassTile;
-        Tile t = Tile.tiles[tiles[x][y]];
-        if(t == null)
-            return Tile.edgeTile;
+    public Tile getTile(int x, int y) {
+        Tile t = null;
+        try {
+            if (x < 0 || y < 0 || x >= width || y >= height)
+                //return Tile.grassTile;
+                throw new UnknownTileException();
+            t = Tile.tiles[tiles[x][y]];
+            if (t == null)
+                //return Tile.edgeTile;
+                throw new UnknownTileException();
+        } catch (UnknownTileException e) {
+            System.out.println(e.getMessage());
+        }
         return t;
     }
-    private void loadWorld(String path){
+    private void loadWorld(String path) {
 
+        try {
+            String file = Utils.loadFileAsString(path);
+            String[] tokens = file.split("\\s+");
+            width = Utils.parseInt(tokens[0]);
+            height = Utils.parseInt(tokens[1]);
+            spawnX = Utils.parseInt(tokens[2]);
+            spawnY = Utils.parseInt(tokens[3]);
 
-        String file = Utils.loadFileAsString(path);
-        String[] tokens = file.split("\\s+");
-        width=Utils.parseInt(tokens[0]);
-        height=Utils.parseInt(tokens[1]);
-        spawnX=Utils.parseInt(tokens[2]);
-        spawnY=Utils.parseInt(tokens[3]);
-
-        tiles = new int[width][height];
-        for (int y = 0; y < height; y++){
-            for(int x=0; x<width; x++){
-                tiles[x][y] = Utils.parseInt(tokens[(x+y*width)+4]);
+            int cnt = 0;
+            tiles = new int[width][height];
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
+                    if(tiles[x][y] == 0)
+                        cnt++;
+                }
             }
+            if(cnt == width * height)
+                throw new EmptyWorldFileException();
+        } catch (EmptyWorldFileException e) {
+            System.out.println(e.getMessage());
         }
     }
 

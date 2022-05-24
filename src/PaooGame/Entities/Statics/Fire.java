@@ -6,14 +6,15 @@ import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 
-public class Castle extends StaticEntity{
+public class Fire extends StaticEntity{
 
 
-    public Castle(Handler handler, float x, float y) {
-        super(handler, x, y, Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 10);
-        bounds.x = 10;
+    public Fire(Handler handler, float x, float y) {
+        super(handler, x, y, Tile.TILE_WIDTH*1, Tile.TILE_HEIGHT *2);
+
+        bounds.x = 0;
         bounds.y = (int) (height / 1.5f);
-        bounds.width = width - 20;
+        bounds.width = width - 7;
         bounds.height = (int) (height - height / 1.5f);
     }
 
@@ -25,15 +26,13 @@ public class Castle extends StaticEntity{
 
     @Override
     public void draw(Graphics g) {
-        //g.setColor(Color.red);
+        //g.setColor(Color.pink);
         //g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);
-        g.drawImage(Assets.castle,(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()), width, height,null);
+        g.drawImage(Assets.fire,(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()), width, height,null);
     }
 
     @Override
     public void die() {
 
     }
-
-
 }

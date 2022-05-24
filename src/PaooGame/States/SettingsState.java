@@ -118,9 +118,26 @@ public class SettingsState extends State {
                 }
             }
         }
+
+        if (handler.getMouseManager().getMouseX() >= 689 && handler.getMouseManager().getMouseX() <= 722) {
+            if (handler.getMouseManager().getMouseY() >= 329 && handler.getMouseManager().getMouseY() <= 362) {
+                if (handler.getMouseManager().isLeftPressed()) {
+
+
+                }
+            }
+        }
+
+        if (handler.getMouseManager().getMouseX() >= 741 && handler.getMouseManager().getMouseX() <= 770) {
+            if (handler.getMouseManager().getMouseY() >= 330 && handler.getMouseManager().getMouseY() <= 362) {
+                if (handler.getMouseManager().isLeftPressed()) {
+
+                }
+            }
+        }
+
     }
         //temporary to go directly to the game state
-
         /*handler.getMouseManager().setUiManager(null);
         State.setState(handler.getGame().gameState);*/
 

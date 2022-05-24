@@ -96,7 +96,8 @@ public class Assets {
     public static BufferedImage lvl3grass;
     public static BufferedImage lava;
     public static BufferedImage castle;
-
+    public static BufferedImage fire;
+    public static BufferedImage tree7;
 
 
     public static BufferedImage blueDiamond;
@@ -109,6 +110,7 @@ public class Assets {
     public static BufferedImage help;
     public static BufferedImage pause;
     public static BufferedImage settings;
+    public static BufferedImage win;
 
     public static BufferedImage gameover;
     public static BufferedImage level2unlocked;
@@ -279,7 +281,8 @@ public class Assets {
         wall = ImageLoader.LoadImage("/textures/objects/wall.png");
 
         castle = ImageLoader.LoadImage("/textures/objects/castle.png");
-
+        fire = ImageLoader.LoadImage("/textures/objects/fire.png");
+        tree7 = ImageLoader.LoadImage("/textures/objects/tree7.png");
 
 
         blueDiamond = ImageLoader.LoadImage("/textures/objects/blueDiamond.png");
@@ -295,6 +298,7 @@ public class Assets {
         level3unlocked = ImageLoader.LoadImage("/textures/menu/level3unlocked.png");
         pause = ImageLoader.LoadImage("/textures/menu/pause.png");
         settings = ImageLoader.LoadImage("/textures/menu/settings.png");
+        win = ImageLoader.LoadImage("/textures/menu/win.png");
 
     }
 
