@@ -30,7 +30,7 @@ public class DataBase {
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        System.out.println("Table created successfully");
+        //System.out.println("Table created successfully");
     }
 
 
