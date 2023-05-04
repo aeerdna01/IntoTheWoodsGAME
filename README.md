@@ -20,7 +20,7 @@ The game's architecture was modeled using UML diagrams.
 * Ability to save and load the game
 * Exception handling for empty or invalid map files and unknown tiles
 
-## Project [documentatation (https://github.com/aeerdna01/IntoTheWoodsGame/files/11396417/Documentatie.pdf)
+## [Project documentation.pdf](https://github.com/aeerdna01/IntoTheWoodsGame/files/11396613/Project.documentation.pdf)
 - Introduction: presentation of the game
 - Game Overview: game rules, characters, game board and level description, game mechanics
 - Menu: menu description
