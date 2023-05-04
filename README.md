@@ -1,6 +1,6 @@
 # Into The Woods Game
-<img src="![1](https://user-images.githubusercontent.com/101983479/236182611-59776d35-fd50-4cde-b788-a816fae4e6bf.PNG)" width="200" height="400" />
 This is a Java-based 2D tile game, featuring a hero that needs to navigate through various levels while avoiding or defeating enemies, collecting diamonds, and power-ups.
+![1](https://user-images.githubusercontent.com/101983479/236182724-5cce264f-fe9b-41b8-8ad9-84b0e57f54f4.PNG)
 
 ## Technologies used
 The game was developed using Java programming language and SQL database for storing user preferences and game data. The Object-Oriented Programming principles were employed throughout the development process. The design patterns used in the project include:
