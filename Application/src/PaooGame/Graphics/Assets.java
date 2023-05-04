@@ -162,10 +162,10 @@ public class Assets {
         SpriteSheet level3 = new SpriteSheet(ImageLoader.LoadImage("/textures/sprites/level3.png"),32,32);
 
         ///initializare obiecte tip audio
-        menuSound = AudioLoader.LoadAudio("C:/Users/Andreea/Desktop/PAOO/New folder/IntoTheWoodsGAME/IntoTheWoodsGAME/res/textures/music/menu2.wav");
-        level1Sound = AudioLoader.LoadAudio("C:\\Users\\Andreea\\Desktop\\PAOO\\New folder\\IntoTheWoodsGAME\\IntoTheWoodsGAME\\res\\textures\\music\\level1.wav");
-        level2Sound = AudioLoader.LoadAudio("C:\\Users\\Andreea\\Desktop\\PAOO\\New folder\\IntoTheWoodsGAME\\IntoTheWoodsGAME\\res\\textures\\music\\level2.wav");
-        level3Sound = AudioLoader.LoadAudio("C:\\Users\\Andreea\\Desktop\\PAOO\\New folder\\IntoTheWoodsGAME\\IntoTheWoodsGAME\\res\\textures\\music\\level3.wav");
+        menuSound = AudioLoader.LoadAudio("t/extures/music/menu2.wav");
+        level1Sound = AudioLoader.LoadAudio("/textures/music/level1.wav");
+        level2Sound = AudioLoader.LoadAudio("/textures/music/level2.wav");
+        level3Sound = AudioLoader.LoadAudio("/textures/music/level3.wav");
 
         ///initializare obiecte tip clip
         try{
