@@ -1,5 +1,7 @@
 # Into The Woods Game
 This is a Java-based 2D tile game, featuring a hero that needs to navigate through various levels while avoiding or defeating enemies, collecting diamonds, and power-ups.
+
+
 ![1](https://user-images.githubusercontent.com/101983479/236182724-5cce264f-fe9b-41b8-8ad9-84b0e57f54f4.PNG)
 
 ## Technologies used
