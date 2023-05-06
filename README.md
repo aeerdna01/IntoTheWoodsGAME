@@ -8,8 +8,9 @@ This is a Java-based 2D tile game, featuring a hero that needs to navigate throu
 
 ## Technologies used
 The game was developed using Java programming language and SQL database for storing user preferences and game data. The Object-Oriented Programming principles were employed throughout the development process. The design patterns used in the project include:
--Singleton pattern for creating a single instance of the hero.
--Factory pattern for creating and returning a tile object with the corresponding ID.
+* Singleton pattern for creating a single instance of the hero.
+* Factory pattern for creating and returning a tile object with the corresponding ID.
+
 The game's architecture was modeled using UML diagrams.
 
 ## Features
@@ -23,8 +24,8 @@ The game's architecture was modeled using UML diagrams.
 ## [Project documentation.pdf](https://github.com/aeerdna01/IntoTheWoodsGame/files/11396613/Project.documentation.pdf)
 - Introduction: presentation of the game
 - Game Overview: game rules, characters, game board and level description, game mechanics
-- Menu: menu description
-- Implementation Details: game sprites, design patterns, exception handling, database overview
+- Menu description
+- Implementation details: game sprites, design patterns, exception handling, database overview
 
 ## UML class diagram
 ![uml1](https://user-images.githubusercontent.com/101983479/236179483-096408bf-07b2-4a8d-a2ab-49ffd72c8b6f.png)
